@@ -14,7 +14,7 @@ function ensureDir(dir: string) {
   }
 }
 
-function saveDb() {
+export function saveDb() {
   if (!db) return;
   const data = db.export();
   const buffer = Buffer.from(data);
