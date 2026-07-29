@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import BrandProfile from './pages/BrandProfile';
+import Generate from './pages/Generate';
 import Onboarding from './pages/Onboarding';
 import Landing from './Landing';
 
@@ -37,6 +38,14 @@ export default function App() {
             element={
               <ProtectedRoute requireBrandProfile>
                 <BrandProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generate"
+            element={
+              <ProtectedRoute requireBrandProfile>
+                <Generate />
               </ProtectedRoute>
             }
           />

@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import { initDb } from './db.js';
 import authRoutes from './routes/auth.js';
 import brandProfileRoutes from './routes/brandProfile.js';
+import generateRoutes from './routes/generate.js';
+import projectRoutes from './routes/projects.js';
 
 const app = express();
 const PORT = 3001;
@@ -23,6 +25,12 @@ app.use('/api/auth', authRoutes);
 
 // Brand profile routes
 app.use('/api/brand-profile', brandProfileRoutes);
+
+// Content generation
+app.use('/api/generate', generateRoutes);
+
+// Projects
+app.use('/api/projects', projectRoutes);
 
 async function start() {
   // Initialize database
