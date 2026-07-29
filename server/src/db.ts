@@ -53,17 +53,25 @@ export async function initDb(): Promise<void> {
     CREATE TABLE IF NOT EXISTS brand_profiles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL UNIQUE,
+      raw_description TEXT,
       business_name TEXT,
       niche TEXT,
       audience TEXT,
       tone TEXT,
+      tone_of_voice TEXT,
       goals TEXT,
       offers TEXT,
+      key_offers TEXT,
       created_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now')),
       FOREIGN KEY (user_id) REFERENCES users(id)
     )
   `);
+
+  // Migration: add new columns if they don't exist (sql.js doesn't support ALTER TABLE ADD COLUMN IF NOT EXISTS)
+  try { database.run(`ALTER TABLE brand_profiles ADD COLUMN raw_description TEXT`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE brand_profiles ADD COLUMN tone_of_voice TEXT`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE brand_profiles ADD COLUMN key_offers TEXT`); } catch (_) { /* already exists */ }
 
   database.run(`
     CREATE TABLE IF NOT EXISTS projects (

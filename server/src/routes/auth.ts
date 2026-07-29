@@ -106,7 +106,12 @@ router.get('/me', authMiddleware, async (req: AuthRequest, res: Response) => {
     }
 
     const [id, email, createdAt] = result[0].values[0];
-    res.json({ user: { id, email, created_at: createdAt } });
+
+    // Check if user has a brand profile
+    const profileResult = db.exec('SELECT id FROM brand_profiles WHERE user_id = ?', [req.userId!]);
+    const hasBrandProfile = profileResult.length > 0 && profileResult[0].values.length > 0;
+
+    res.json({ user: { id, email, created_at: createdAt, has_brand_profile: hasBrandProfile } });
   } catch (err) {
     console.error('Me error:', err);
     res.status(500).json({ error: 'Internal server error' });

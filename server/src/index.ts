@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { initDb } from './db.js';
 import authRoutes from './routes/auth.js';
+import brandProfileRoutes from './routes/brandProfile.js';
 
 const app = express();
 const PORT = 3001;
@@ -19,6 +20,9 @@ app.get('/api/health', (_req, res) => {
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+
+// Brand profile routes
+app.use('/api/brand-profile', brandProfileRoutes);
 
 async function start() {
   // Initialize database
