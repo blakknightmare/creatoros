@@ -8,13 +8,29 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CO</span>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
+              <span className="text-white font-bold text-sm">CO</span>
+            </div>
+            <span className="font-semibold text-lg tracking-tight text-slate-800">
+              CreatorOS
+            </span>
           </div>
-          <span className="font-semibold text-lg tracking-tight text-slate-800">
-            CreatorOS
-          </span>
+          <div className="hidden sm:flex items-center gap-1">
+            <Link
+              to="/dashboard"
+              className="px-3 py-1.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-lg"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/brand-profile"
+              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              Brand Profile
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-slate-500">{user?.email}</span>
