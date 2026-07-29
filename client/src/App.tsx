@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import Onboarding from './pages/Onboarding';
 import Landing from './Landing';
 
 export default function App() {
@@ -15,9 +16,17 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
-            path="/dashboard"
+            path="/onboarding"
             element={
               <ProtectedRoute>
+                <Onboarding />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute requireBrandProfile>
                 <Dashboard />
               </ProtectedRoute>
             }
