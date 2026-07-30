@@ -9,6 +9,7 @@ import projectRoutes from './routes/projects.js';
 import transcriptRoutes from './routes/transcript.js';
 import batchRoutes from './routes/batch.js';
 import subscriptionRoutes from './routes/subscription.js';
+import calendarRoutes from './routes/calendar.js';
 
 const app = express();
 const PORT = 3001;
@@ -37,6 +38,9 @@ app.use('/api/generate', generateRoutes);
 
 // Projects
 app.use('/api/projects', projectRoutes);
+
+// Calendar
+app.use('/api/calendar', calendarRoutes);
 
 // Transcript intake
 app.use('/api/transcript', transcriptRoutes);

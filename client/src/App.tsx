@@ -10,6 +10,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import Onboarding from './pages/Onboarding';
 import Batch from './pages/Batch';
 import Pricing from './pages/Pricing';
+import Calendar from './pages/Calendar';
 import Landing from './Landing';
 
 export default function App() {
@@ -66,6 +67,14 @@ export default function App() {
             element={
               <ProtectedRoute requireBrandProfile>
                 <Batch />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute requireBrandProfile>
+                <Calendar />
               </ProtectedRoute>
             }
           />
