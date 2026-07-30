@@ -214,6 +214,12 @@ export default function Generate() {
               Generate
             </Link>
             <Link
+              to="/batch"
+              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              Video to Content
+            </Link>
+            <Link
               to="/brand-profile"
               className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
             >

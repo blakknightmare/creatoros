@@ -8,6 +8,7 @@ import BrandProfile from './pages/BrandProfile';
 import Generate from './pages/Generate';
 import ProjectDetail from './pages/ProjectDetail';
 import Onboarding from './pages/Onboarding';
+import Batch from './pages/Batch';
 import Landing from './Landing';
 
 export default function App() {
@@ -55,6 +56,14 @@ export default function App() {
             element={
               <ProtectedRoute requireBrandProfile>
                 <ProjectDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/batch"
+            element={
+              <ProtectedRoute requireBrandProfile>
+                <Batch />
               </ProtectedRoute>
             }
           />
