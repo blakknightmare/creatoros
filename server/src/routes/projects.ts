@@ -44,12 +44,57 @@ router.post('/', async (req: AuthRequest, res: Response) => {
   }
 });
 
+// GET /api/projects/stats — project stats for dashboard
+router.get('/stats', async (req: AuthRequest, res: Response) => {
+  try {
+    const db = await getDb();
+
+    // Total projects
+    const totalResult = db.exec(
+      'SELECT COUNT(*) as count FROM projects WHERE user_id = ?',
+      [req.userId!]
+    );
+    const totalProjects = totalResult[0]?.values[0]?.[0] || 0;
+
+    // Most used content type
+    let mostUsedType: string | null = null;
+    if (totalProjects > 0) {
+      const typeResult = db.exec(
+        `SELECT content_type, COUNT(*) as cnt
+         FROM projects WHERE user_id = ?
+         GROUP BY content_type
+         ORDER BY cnt DESC
+         LIMIT 1`,
+        [req.userId!]
+      );
+      mostUsedType = typeResult[0]?.values[0]?.[0] || null;
+    }
+
+    // Projects this week (last 7 days)
+    const weekResult = db.exec(
+      `SELECT COUNT(*) as count FROM projects
+       WHERE user_id = ? AND created_at >= datetime('now', '-7 days')`,
+      [req.userId!]
+    );
+    const projectsThisWeek = weekResult[0]?.values[0]?.[0] || 0;
+
+    res.json({
+      totalProjects,
+      mostUsedType,
+      projectsThisWeek,
+    });
+  } catch (err) {
+    console.error('Project stats error:', err);
+    res.status(500).json({ error: 'Failed to get project stats' });
+  }
+});
+
 // GET /api/projects — list user's projects
 router.get('/', async (req: AuthRequest, res: Response) => {
   try {
     const db = await getDb();
 
-    const { type, limit, offset } = req.query as Record<string, string>;
+    const { type, limit, offset, sort, search } = req.query as Record<string, string>;
 
     let query = `SELECT id, user_id, content_type, topic, generated_content, created_at
                  FROM projects WHERE user_id = ?`;
@@ -60,9 +105,15 @@ router.get('/', async (req: AuthRequest, res: Response) => {
       params.push(type);
     }
 
-    query += ' ORDER BY created_at DESC';
+    if (search && typeof search === 'string' && search.trim()) {
+      query += ' AND topic LIKE ?';
+      params.push(`%${search.trim()}%`);
+    }
 
-    const limitNum = limit ? parseInt(limit, 10) : 50;
+    const sortOrder = sort === 'oldest' ? 'ASC' : 'DESC';
+    query += ` ORDER BY created_at ${sortOrder}`;
+
+    const limitNum = limit ? parseInt(limit, 10) : 100;
     const offsetNum = offset ? parseInt(offset, 10) : 0;
 
     query += ` LIMIT ${limitNum} OFFSET ${offsetNum}`;
@@ -77,18 +128,22 @@ router.get('/', async (req: AuthRequest, res: Response) => {
     const columns = result[0].columns;
     const projects = result[0].values.map((row: any[]) => {
       const project: any = {};
-      columns.forEach((col, i) => {
+      columns.forEach((col: string, i: number) => {
         project[col] = row[i];
       });
       return project;
     });
 
-    // Get total count
+    // Get total count matching filters
     let countQuery = 'SELECT COUNT(*) as count FROM projects WHERE user_id = ?';
     const countParams: any[] = [req.userId!];
     if (type && typeof type === 'string') {
       countQuery += ' AND content_type = ?';
       countParams.push(type);
+    }
+    if (search && typeof search === 'string' && search.trim()) {
+      countQuery += ' AND topic LIKE ?';
+      countParams.push(`%${search.trim()}%`);
     }
     const countResult = db.exec(countQuery, countParams);
     const count = countResult[0]?.values[0]?.[0] || 0;
@@ -118,7 +173,7 @@ router.get('/:id', async (req: AuthRequest, res: Response) => {
     const row = result[0].values[0];
     const columns = result[0].columns;
     const project: any = {};
-    columns.forEach((col, i) => {
+    columns.forEach((col: string, i: number) => {
       project[col] = row[i];
     });
 
@@ -126,6 +181,35 @@ router.get('/:id', async (req: AuthRequest, res: Response) => {
   } catch (err) {
     console.error('Get project error:', err);
     res.status(500).json({ error: 'Failed to get project' });
+  }
+});
+
+// DELETE /api/projects/:id — delete a project
+router.delete('/:id', async (req: AuthRequest, res: Response) => {
+  try {
+    const db = await getDb();
+
+    // Verify ownership
+    const check = db.exec(
+      'SELECT id FROM projects WHERE id = ? AND user_id = ?',
+      [req.params.id, req.userId!]
+    );
+
+    if (check.length === 0 || check[0].values.length === 0) {
+      res.status(404).json({ error: 'Project not found' });
+      return;
+    }
+
+    db.run('DELETE FROM projects WHERE id = ? AND user_id = ?', [
+      req.params.id,
+      req.userId!,
+    ]);
+    saveDb();
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Delete project error:', err);
+    res.status(500).json({ error: 'Failed to delete project' });
   }
 });
 
