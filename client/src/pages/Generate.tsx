@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import AppLayout from '../components/AppLayout';
+import LimitModal from '../components/LimitModal';
 
 const API_BASE = '/api';
 
@@ -44,7 +46,7 @@ interface GenerationResult {
 }
 
 export default function Generate() {
-  const { token, logout, hasBrandProfile } = useAuth();
+  const { token, hasBrandProfile, dailyUsage, refreshUsage } = useAuth();
   const navigate = useNavigate();
   const [contentTypes, setContentTypes] = useState<ContentType[]>([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -56,6 +58,7 @@ export default function Generate() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   // Redirect if no brand profile
   useEffect(() => {
@@ -126,18 +129,25 @@ export default function Generate() {
 
       const data = await res.json();
 
+      if (res.status === 429) {
+        setShowLimitModal(true);
+        return;
+      }
+
       if (!res.ok) {
         setError(data.error || 'Generation failed');
         return;
       }
 
       setResult(data);
+      // Refresh usage count after successful generation
+      await refreshUsage();
     } catch {
       setError('Network error — please try again');
     } finally {
       setGenerating(false);
     }
-  }, [selectedType, topic, toneOverride, length, token]);
+  }, [selectedType, topic, toneOverride, length, token, refreshUsage]);
 
   const handleCopy = async () => {
     if (!result) return;
@@ -188,52 +198,12 @@ export default function Generate() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CO</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">
-              CreatorOS
-            </span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1">
-            <Link
-              to="/dashboard"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/generate"
-              className="px-3 py-1.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-lg"
-            >
-              Generate
-            </Link>
-            <Link
-              to="/batch"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Video to Content
-            </Link>
-            <Link
-              to="/brand-profile"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Brand Profile
-            </Link>
-          </div>
-        </div>
-        <button
-          onClick={logout}
-          className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-        >
-          Log out
-        </button>
-      </nav>
+    <AppLayout>
+      <LimitModal
+        isOpen={showLimitModal}
+        onClose={() => setShowLimitModal(false)}
+        dailyCount={dailyUsage.count}
+      />
 
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-10">
@@ -483,6 +453,6 @@ export default function Generate() {
           </div>
         )}
       </main>
-    </div>
+    </AppLayout>
   );
 }

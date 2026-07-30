@@ -1,6 +1,7 @@
 import { Router, Response } from 'express';
 import { getDb } from '../db.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { checkUsageLimit, incrementUsage } from '../middleware/usage.js';
 import { getOpenAIClient } from '../openai.js';
 
 const router = Router();
@@ -342,7 +343,7 @@ Enable AI generation (set OPENAI_API_KEY) for fully customized content that matc
 }
 
 // POST /api/generate — generate content
-router.post('/', async (req: AuthRequest, res: Response) => {
+router.post('/', checkUsageLimit, async (req: AuthRequest, res: Response) => {
   try {
     const { type, topic, tone_override, length } = req.body;
 
@@ -429,6 +430,9 @@ router.post('/', async (req: AuthRequest, res: Response) => {
         tone: brandProfile.tone_of_voice || brandProfile.tone,
       },
     });
+
+    // Increment usage count after successful generation
+    await incrementUsage(req.userId!);
   } catch (err) {
     console.error('Generate error:', err);
     res.status(500).json({ error: 'Failed to generate content' });

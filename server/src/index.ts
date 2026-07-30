@@ -8,6 +8,7 @@ import generateRoutes from './routes/generate.js';
 import projectRoutes from './routes/projects.js';
 import transcriptRoutes from './routes/transcript.js';
 import batchRoutes from './routes/batch.js';
+import subscriptionRoutes from './routes/subscription.js';
 
 const app = express();
 const PORT = 3001;
@@ -24,6 +25,9 @@ app.get('/api/health', (_req, res) => {
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+
+// Subscription routes (before generation — no usage check needed for subscription info)
+app.use('/api/subscription', subscriptionRoutes);
 
 // Brand profile routes
 app.use('/api/brand-profile', brandProfileRoutes);

@@ -1,10 +1,16 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 
 interface User {
   id: number;
   email: string;
   created_at?: string;
   has_brand_profile?: boolean;
+  tier?: string;
+}
+
+interface DailyUsage {
+  count: number;
+  limit: number | null;
 }
 
 interface AuthContextType {
@@ -13,6 +19,9 @@ interface AuthContextType {
   loading: boolean;
   hasBrandProfile: boolean;
   setHasBrandProfile: (v: boolean) => void;
+  tier: string;
+  dailyUsage: DailyUsage;
+  refreshUsage: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -29,6 +38,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
   const [loading, setLoading] = useState(true);
   const [hasBrandProfile, setHasBrandProfile] = useState(false);
+  const [tier, setTier] = useState('free');
+  const [dailyUsage, setDailyUsage] = useState<DailyUsage>({ count: 0, limit: 10 });
+
+  const fetchSubscription = useCallback(async (authToken: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/subscription`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTier(data.tier || 'free');
+        setDailyUsage({
+          count: data.dailyUsage?.count || 0,
+          limit: data.dailyUsage?.limit,
+        });
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const refreshUsage = useCallback(async () => {
+    if (token) {
+      await fetchSubscription(token);
+    }
+  }, [token, fetchSubscription]);
 
   // On mount, check if existing token is still valid
   useEffect(() => {
@@ -45,6 +80,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const data = await res.json();
           setUser(data.user);
           setHasBrandProfile(data.user.has_brand_profile || false);
+          setTier(data.user.tier || 'free');
+          // Also fetch subscription for usage counts
+          await fetchSubscription(token);
         } else {
           // Token invalid, clear it
           localStorage.removeItem('token');
@@ -76,7 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(data.token);
     setUser(data.user);
 
-    // Check brand profile status
+    // Check brand profile status and subscription
     try {
       const profileRes = await fetch(`${API_BASE}/brand-profile`, {
         headers: { Authorization: `Bearer ${data.token}` },
@@ -85,6 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const profileData = await profileRes.json();
         setHasBrandProfile(!!profileData.profile);
       }
+      await fetchSubscription(data.token);
     } catch {
       // ignore
     }
@@ -108,6 +147,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(data.user);
     // New users won't have a brand profile yet
     setHasBrandProfile(false);
+    setTier('free');
+    setDailyUsage({ count: 0, limit: 10 });
   };
 
   const logout = () => {
@@ -115,10 +156,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null);
     setUser(null);
     setHasBrandProfile(false);
+    setTier('free');
+    setDailyUsage({ count: 0, limit: 10 });
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, hasBrandProfile, setHasBrandProfile, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, hasBrandProfile, setHasBrandProfile, tier, dailyUsage, refreshUsage, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
