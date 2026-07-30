@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import AppLayout from '../components/AppLayout';
 import LimitModal from '../components/LimitModal';
+import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
 
@@ -46,7 +47,7 @@ interface GenerationResult {
 }
 
 export default function Generate() {
-  const { token, hasBrandProfile, dailyUsage, refreshUsage } = useAuth();
+  const { token, hasBrandProfile, tier, dailyUsage, refreshUsage } = useAuth();
   const navigate = useNavigate();
   const [contentTypes, setContentTypes] = useState<ContentType[]>([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -151,14 +152,15 @@ export default function Generate() {
 
   const handleCopy = async () => {
     if (!result) return;
+    const watermarked = addWatermark(result.content, tier);
     try {
-      await navigator.clipboard.writeText(result.content);
+      await navigator.clipboard.writeText(watermarked);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for older browsers
       const textarea = document.createElement('textarea');
-      textarea.value = result.content;
+      textarea.value = watermarked;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');

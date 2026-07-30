@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
 
@@ -37,7 +38,7 @@ const TYPE_ICONS: Record<string, string> = {
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, tier } = useAuth();
   const token = localStorage.getItem('token');
 
   const [project, setProject] = useState<Project | null>(null);
@@ -77,13 +78,14 @@ export default function ProjectDetail() {
 
   const handleCopy = async () => {
     if (!project) return;
+    const watermarked = addWatermark(project.generated_content, tier);
     try {
-      await navigator.clipboard.writeText(project.generated_content);
+      await navigator.clipboard.writeText(watermarked);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       const textarea = document.createElement('textarea');
-      textarea.value = project.generated_content;
+      textarea.value = watermarked;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');

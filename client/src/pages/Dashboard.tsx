@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
 
@@ -43,7 +44,7 @@ const TYPE_ICONS: Record<string, string> = {
 const ALL_TYPES = Object.keys(TYPE_LABELS);
 
 export default function Dashboard() {
-  const { user, logout, hasBrandProfile } = useAuth();
+  const { user, logout, hasBrandProfile, tier } = useAuth();
 
   // Project list state
   const [projects, setProjects] = useState<Project[]>([]);
@@ -151,13 +152,14 @@ export default function Dashboard() {
 
   const handleCopy = async (project: Project, e: React.MouseEvent) => {
     e.stopPropagation();
+    const watermarked = addWatermark(project.generated_content, tier);
     try {
-      await navigator.clipboard.writeText(project.generated_content);
+      await navigator.clipboard.writeText(watermarked);
       setCopiedId(project.id);
       setTimeout(() => setCopiedId(null), 2000);
     } catch {
       const textarea = document.createElement('textarea');
-      textarea.value = project.generated_content;
+      textarea.value = watermarked;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');
@@ -387,6 +389,22 @@ export default function Dashboard() {
                 </div>
               </div>
             </Link>
+
+            {/* Upgrade banner for free users */}
+            {tier === 'free' && (
+              <div className="mb-6 px-4 py-3 rounded-xl bg-gradient-to-r from-brand-50 to-purple-50 border border-brand-200 flex items-center justify-between">
+                <p className="text-sm text-brand-800 flex items-center gap-2">
+                  <span>⚡</span>
+                  <span>Upgrade to Pro to remove watermarks — just £19/month</span>
+                </p>
+                <Link
+                  to="/pricing"
+                  className="px-4 py-1.5 text-xs font-semibold bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors whitespace-nowrap"
+                >
+                  View Plans
+                </Link>
+              </div>
+            )}
 
             {/* All Projects Section */}
             <div>
