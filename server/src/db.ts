@@ -95,6 +95,20 @@ export async function initDb(): Promise<void> {
     )
   `);
 
+  database.run(`
+    CREATE TABLE IF NOT EXISTS calendar_events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      project_id INTEGER NOT NULL,
+      scheduled_date TEXT NOT NULL,
+      platform TEXT,
+      notes TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+    )
+  `);
+
   saveDb();
   console.log('Database initialized successfully');
 }

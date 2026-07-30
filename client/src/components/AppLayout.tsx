@@ -23,6 +23,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
     { to: '/brand-profile', label: 'Brand Profile' },
   ];
 
+  // Calendar link — only for Pro/Agency users
+  if (tier === 'pro' || tier === 'agency') {
+    navLinks.push({ to: '/calendar', label: 'Calendar' });
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
       {/* Nav */}
