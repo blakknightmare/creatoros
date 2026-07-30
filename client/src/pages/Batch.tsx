@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import AppLayout from '../components/AppLayout';
 import LimitModal from '../components/LimitModal';
+import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
 
@@ -85,7 +86,7 @@ const PROGRESS_MESSAGES = [
 ];
 
 export default function Batch() {
-  const { token, hasBrandProfile, dailyUsage, refreshUsage } = useAuth();
+  const { token, hasBrandProfile, tier, dailyUsage, refreshUsage } = useAuth();
   const navigate = useNavigate();
 
   // Input state
@@ -188,13 +189,14 @@ export default function Batch() {
   };
 
   const handleCopy = async (text: string, key: string) => {
+    const watermarked = addWatermark(text, tier);
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(watermarked);
       setCopiedPiece(key);
       setTimeout(() => setCopiedPiece(null), 2000);
     } catch {
       const textarea = document.createElement('textarea');
-      textarea.value = text;
+      textarea.value = watermarked;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');
