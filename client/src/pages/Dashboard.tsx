@@ -361,6 +361,33 @@ export default function Dashboard() {
               </Link>
             </div>
 
+            {/* Video to Content — flagship feature card */}
+            <Link
+              to="/batch"
+              className="block mb-8 rounded-2xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group"
+            >
+              <div className="flex items-start gap-5">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-2xl shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                  🎬
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h2 className="text-lg font-bold text-slate-900">Video to Content</h2>
+                    <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-600 text-white">NEW</span>
+                  </div>
+                  <p className="text-sm text-slate-600 mb-3">
+                    Drop in a long-form video transcript and get <strong>weeks</strong> of content out — TikTok ideas, Reels, captions, hooks, newsletter, carousel, and a full blog article. All generated in one batch, perfectly on-brand.
+                  </p>
+                  <div className="flex items-center gap-1 text-sm font-semibold text-purple-700 group-hover:text-purple-800">
+                    <span>Try it now</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
             {/* All Projects Section */}
             <div>
               {/* Section header with filter controls */}

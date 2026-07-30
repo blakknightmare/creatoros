@@ -6,6 +6,8 @@ import authRoutes from './routes/auth.js';
 import brandProfileRoutes from './routes/brandProfile.js';
 import generateRoutes from './routes/generate.js';
 import projectRoutes from './routes/projects.js';
+import transcriptRoutes from './routes/transcript.js';
+import batchRoutes from './routes/batch.js';
 
 const app = express();
 const PORT = 3001;
@@ -31,6 +33,12 @@ app.use('/api/generate', generateRoutes);
 
 // Projects
 app.use('/api/projects', projectRoutes);
+
+// Transcript intake
+app.use('/api/transcript', transcriptRoutes);
+
+// Batch content generation
+app.use('/api/generate/batch', batchRoutes);
 
 async function start() {
   // Initialize database
