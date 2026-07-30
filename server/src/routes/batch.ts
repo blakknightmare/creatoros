@@ -1,6 +1,7 @@
 import { Router, Response } from 'express';
 import { getDb } from '../db.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { checkUsageLimit, incrementUsage } from '../middleware/usage.js';
 import { getOpenAIClient } from '../openai.js';
 
 const router = Router();
@@ -309,7 +310,7 @@ If you're looking for personalized guidance tailored specifically to ${audience}
 }
 
 // POST /api/generate/batch — batch generate all content types from a transcript
-router.post('/', async (req: AuthRequest, res: Response) => {
+router.post('/', checkUsageLimit, async (req: AuthRequest, res: Response) => {
   try {
     const { transcript, youtubeUrl } = req.body;
 
@@ -461,6 +462,9 @@ router.post('/', async (req: AuthRequest, res: Response) => {
         tone: brandProfile.tone_of_voice || brandProfile.tone,
       },
     });
+
+    // Increment usage count after successful batch generation (counts as 1)
+    await incrementUsage(req.userId!);
   } catch (err) {
     console.error('Batch generate error:', err);
     res.status(500).json({ error: 'Failed to generate batch content' });

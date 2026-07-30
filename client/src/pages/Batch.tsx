@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import AppLayout from '../components/AppLayout';
+import LimitModal from '../components/LimitModal';
 
 const API_BASE = '/api';
 
@@ -83,7 +85,7 @@ const PROGRESS_MESSAGES = [
 ];
 
 export default function Batch() {
-  const { token, hasBrandProfile } = useAuth();
+  const { token, hasBrandProfile, dailyUsage, refreshUsage } = useAuth();
   const navigate = useNavigate();
 
   // Input state
@@ -95,6 +97,7 @@ export default function Batch() {
   const [generating, setGenerating] = useState(false);
   const [progressIndex, setProgressIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   // Results state
   const [result, setResult] = useState<BatchResult | null>(null);
@@ -161,13 +164,22 @@ export default function Batch() {
 
       const data = await res.json();
 
+      if (res.status === 429) {
+        setShowLimitModal(true);
+        setGenerating(false);
+        return;
+      }
+
       if (!res.ok) {
         setError(data.error || 'Batch generation failed');
+        setGenerating(false);
         return;
       }
 
       setResult(data.result);
       setSummary(data.summary);
+      // Refresh usage count after successful batch generation
+      await refreshUsage();
     } catch {
       setError('Network error — please try again');
     } finally {
@@ -344,35 +356,12 @@ export default function Batch() {
   if (!hasBrandProfile) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-6">
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CO</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">CreatorOS</span>
-          </Link>
-          <div className="hidden sm:flex items-center gap-1">
-            <Link to="/dashboard" className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors">
-              Dashboard
-            </Link>
-            <Link to="/generate" className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors">
-              Generate
-            </Link>
-            <Link to="/batch" className="px-3 py-1.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-lg">
-              Video to Content
-            </Link>
-            <Link to="/brand-profile" className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors">
-              Brand Profile
-            </Link>
-          </div>
-        </div>
-        <Link to="/dashboard" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors">
-          Back to Dashboard
-        </Link>
-      </nav>
+    <AppLayout>
+      <LimitModal
+        isOpen={showLimitModal}
+        onClose={() => setShowLimitModal(false)}
+        dailyCount={dailyUsage.count}
+      />
 
       <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Header */}
@@ -933,7 +922,7 @@ export default function Batch() {
           </div>
         )}
       </main>
-    </div>
+    </AppLayout>
   );
 }
 

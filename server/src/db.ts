@@ -49,6 +49,16 @@ export async function initDb(): Promise<void> {
     )
   `);
 
+  // Migration: add subscription/usage columns if they don't exist
+  try { database.run(`ALTER TABLE users ADD COLUMN tier TEXT DEFAULT 'free'`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE users ADD COLUMN daily_generation_count INTEGER DEFAULT 0`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE users ADD COLUMN daily_generation_date TEXT`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE users ADD COLUMN stripe_customer_id TEXT`); } catch (_) { /* already exists */ }
+
+  // Ensure existing users have defaults for new columns
+  database.run(`UPDATE users SET tier = 'free' WHERE tier IS NULL`);
+  database.run(`UPDATE users SET daily_generation_count = 0 WHERE daily_generation_count IS NULL`);
+
   database.run(`
     CREATE TABLE IF NOT EXISTS brand_profiles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -9,6 +9,7 @@ import Generate from './pages/Generate';
 import ProjectDetail from './pages/ProjectDetail';
 import Onboarding from './pages/Onboarding';
 import Batch from './pages/Batch';
+import Pricing from './pages/Pricing';
 import Landing from './Landing';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route
             path="/onboarding"
             element={

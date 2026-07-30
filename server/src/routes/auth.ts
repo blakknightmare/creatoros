@@ -98,20 +98,20 @@ router.post('/login', async (req: AuthRequest, res: Response) => {
 router.get('/me', authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
     const db = await getDb();
-    const result = db.exec('SELECT id, email, created_at FROM users WHERE id = ?', [req.userId!]);
+    const result = db.exec('SELECT id, email, created_at, tier FROM users WHERE id = ?', [req.userId!]);
 
     if (result.length === 0 || result[0].values.length === 0) {
       res.status(404).json({ error: 'User not found' });
       return;
     }
 
-    const [id, email, createdAt] = result[0].values[0];
+    const [id, email, createdAt, tier] = result[0].values[0];
 
     // Check if user has a brand profile
     const profileResult = db.exec('SELECT id FROM brand_profiles WHERE user_id = ?', [req.userId!]);
     const hasBrandProfile = profileResult.length > 0 && profileResult[0].values.length > 0;
 
-    res.json({ user: { id, email, created_at: createdAt, has_brand_profile: hasBrandProfile } });
+    res.json({ user: { id, email, created_at: createdAt, has_brand_profile: hasBrandProfile, tier: tier || 'free' } });
   } catch (err) {
     console.error('Me error:', err);
     res.status(500).json({ error: 'Internal server error' });
