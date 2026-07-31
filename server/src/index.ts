@@ -10,6 +10,7 @@ import transcriptRoutes from './routes/transcript.js';
 import batchRoutes from './routes/batch.js';
 import subscriptionRoutes from './routes/subscription.js';
 import calendarRoutes from './routes/calendar.js';
+import stripeRoutes from './routes/stripe.js';
 
 const app = express();
 const PORT = 3001;
@@ -29,6 +30,9 @@ app.use('/api/auth', authRoutes);
 
 // Subscription routes (before generation — no usage check needed for subscription info)
 app.use('/api/subscription', subscriptionRoutes);
+
+// Stripe webhooks (public endpoint; Stripe cannot send auth credentials)
+app.use('/api/stripe', stripeRoutes);
 
 // Brand profile routes
 app.use('/api/brand-profile', brandProfileRoutes);
