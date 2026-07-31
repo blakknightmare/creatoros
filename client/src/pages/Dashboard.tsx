@@ -177,6 +177,25 @@ export default function Dashboard() {
     }
   };
 
+  const handleCopyClean = async (project: Project, e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Agency white-label: copy raw content with no watermark or branding
+    try {
+      await navigator.clipboard.writeText(project.generated_content);
+      setCopiedId(project.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = project.generated_content;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedId(project.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    }
+  };
+
   const handleDelete = async (projectId: number, e: React.MouseEvent) => {
     e.stopPropagation();
     setDeletingId(projectId);
@@ -714,6 +733,33 @@ export default function Dashboard() {
                               </>
                             )}
                           </button>
+
+                          {tier === 'agency' && (
+                            <button
+                              onClick={(e) => handleCopyClean(project, e)}
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                isCopied
+                                  ? 'bg-green-100 text-green-700 border border-green-200'
+                                  : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 hover:border-amber-300'
+                              }`}
+                            >
+                              {isCopied ? (
+                                <>
+                                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                  Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                  </svg>
+                                  Copy Clean
+                                </>
+                              )}
+                            </button>
+                          )}
 
                           {project.topic && (
                             <Link
