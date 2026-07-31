@@ -54,10 +54,12 @@ export async function initDb(): Promise<void> {
   try { database.run(`ALTER TABLE users ADD COLUMN daily_generation_count INTEGER DEFAULT 0`); } catch (_) { /* already exists */ }
   try { database.run(`ALTER TABLE users ADD COLUMN daily_generation_date TEXT`); } catch (_) { /* already exists */ }
   try { database.run(`ALTER TABLE users ADD COLUMN stripe_customer_id TEXT`); } catch (_) { /* already exists */ }
+  try { database.run(`ALTER TABLE users ADD COLUMN batch_generation_count INTEGER DEFAULT 0`); } catch (_) { /* already exists */ }
 
   // Ensure existing users have defaults for new columns
   database.run(`UPDATE users SET tier = 'free' WHERE tier IS NULL`);
   database.run(`UPDATE users SET daily_generation_count = 0 WHERE daily_generation_count IS NULL`);
+  database.run(`UPDATE users SET batch_generation_count = 0 WHERE batch_generation_count IS NULL`);
 
   database.run(`
     CREATE TABLE IF NOT EXISTS brand_profiles (
