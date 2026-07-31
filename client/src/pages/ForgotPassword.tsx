@@ -1,20 +1,11 @@
 import { useState, FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
-export default function Login() {
-  const { login, user } = useAuth();
-  const navigate = useNavigate();
+export default function ForgotPassword() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-
-  // If already logged in, redirect
-  if (user) {
-    navigate('/dashboard', { replace: true });
-    return null;
-  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -22,14 +13,50 @@ export default function Login() {
     setSubmitting(true);
 
     try {
-      await login(email, password);
-      navigate('/dashboard', { replace: true });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong');
+      } else {
+        setSubmitted(true);
+      }
+    } catch {
+      setError('Unable to connect. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-brand-50 px-4">
+        <div className="w-full max-w-md text-center">
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+              <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h1 className="text-xl font-bold text-slate-900 mb-2">Check your email</h1>
+            <p className="text-slate-500 text-sm">
+              If an account exists for <span className="font-medium text-slate-700">{email}</span>, we've sent a password reset link. It expires in 1 hour.
+            </p>
+          </div>
+          <Link
+            to="/login"
+            className="inline-block mt-6 text-sm text-brand-600 font-medium hover:text-brand-700"
+          >
+            ← Back to sign in
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-brand-50 px-4">
@@ -43,8 +70,10 @@ export default function Login() {
               CreatorOS
             </span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
-          <p className="text-slate-500 mt-1">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-slate-900">Forgot your password?</h1>
+          <p className="text-slate-500 mt-1">
+            Enter your email and we'll send you a reset link
+          </p>
         </div>
 
         <form
@@ -72,40 +101,18 @@ export default function Login() {
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent shadow-sm"
-            />
-          </div>
-
           <button
             type="submit"
             disabled={submitting}
             className="w-full py-2.5 text-sm font-semibold bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {submitting ? 'Signing in...' : 'Sign in'}
+            {submitting ? 'Sending...' : 'Send reset link'}
           </button>
-
-          <p className="text-right">
-            <Link to="/forgot-password" className="text-sm text-brand-600 font-medium hover:text-brand-700">
-              Forgot password?
-            </Link>
-          </p>
         </form>
 
         <p className="text-center text-sm text-slate-500 mt-6">
-          Don't have an account?{' '}
-          <Link to="/signup" className="text-brand-600 font-medium hover:text-brand-700">
-            Create one
+          <Link to="/login" className="text-brand-600 font-medium hover:text-brand-700">
+            ← Back to sign in
           </Link>
         </p>
       </div>

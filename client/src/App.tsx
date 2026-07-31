@@ -7,6 +7,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 // Direct imports — smaller pages kept eager for instant navigation
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import BrandProfile from './pages/BrandProfile';
 import ProjectDetail from './pages/ProjectDetail';
@@ -41,6 +43,8 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route
             path="/onboarding"

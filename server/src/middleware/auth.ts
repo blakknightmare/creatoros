@@ -7,8 +7,16 @@ export interface AuthRequest extends Request {
   userId?: number;
 }
 
-export function generateToken(userId: number): string {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
+export function generateToken(userId: number, expiresIn: string = '7d'): string {
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn });
+}
+
+export function verifyToken(token: string): { userId: number } | null {
+  try {
+    return jwt.verify(token, JWT_SECRET) as { userId: number };
+  } catch {
+    return null;
+  }
 }
 
 export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction): void {
