@@ -26,6 +26,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   // Calendar link — only for Pro/Agency users
   if (tier === 'pro' || tier === 'agency') {
     navLinks.push({ to: '/calendar', label: 'Calendar' });
+    navLinks.push({ to: '/analytics', label: 'Analytics' });
   }
 
   return (

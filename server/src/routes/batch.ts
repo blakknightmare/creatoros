@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { getDb } from '../db.js';
+import { getDb, saveDb } from '../db.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { checkUsageLimit, incrementUsage } from '../middleware/usage.js';
 import { getOpenAIClient } from '../openai.js';
@@ -462,6 +462,18 @@ router.post('/', checkUsageLimit, async (req: AuthRequest, res: Response) => {
         tone: brandProfile.tone_of_voice || brandProfile.tone,
       },
     });
+
+    // Increment batch generation counter
+    try {
+      const db2 = await getDb();
+      db2.run(
+        `UPDATE users SET batch_generation_count = COALESCE(batch_generation_count, 0) + 1 WHERE id = ?`,
+        [req.userId!]
+      );
+      saveDb();
+    } catch (e) {
+      console.error('Failed to increment batch count:', e);
+    }
 
     // Increment usage count after successful batch generation (counts as 1)
     await incrementUsage(req.userId!);
