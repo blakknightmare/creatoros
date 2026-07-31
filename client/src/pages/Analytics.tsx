@@ -55,9 +55,11 @@ export default function Analytics() {
   const { tier } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const token = localStorage.getItem('token');
 
   const fetchStats = useCallback(async () => {
+    setError(null);
     try {
       const res = await fetch(`${API_BASE}/projects/stats`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -65,9 +67,11 @@ export default function Analytics() {
       if (res.ok) {
         const data = await res.json();
         setStats(data);
+      } else {
+        setError('Failed to load analytics data.');
       }
     } catch {
-      // ignore
+      setError('Network error — could not load analytics.');
     }
     setLoading(false);
   }, [token]);
@@ -159,6 +163,37 @@ export default function Analytics() {
                 ))}
               </div>
             </div>
+          </div>
+        </main>
+      </AppLayout>
+    );
+  }
+
+  // ---- Error state ----
+  if (error) {
+    return (
+      <AppLayout>
+        <main className="max-w-6xl mx-auto px-6 py-12">
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-slate-900">Analytics</h1>
+            <p className="text-slate-500 mt-1">
+              Track your content generation over time.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-12 text-center">
+            <div className="text-5xl mb-4">⚠️</div>
+            <h2 className="text-xl font-semibold text-red-800 mb-2">
+              Could not load analytics
+            </h2>
+            <p className="text-sm text-red-600 max-w-md mx-auto mb-6">
+              {error}
+            </p>
+            <button
+              onClick={fetchStats}
+              className="px-6 py-3 text-sm font-semibold bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors shadow-sm"
+            >
+              Retry
+            </button>
           </div>
         </main>
       </AppLayout>

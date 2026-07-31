@@ -90,6 +90,7 @@ export default function Calendar() {
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projectsError, setProjectsError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [dragOverDate, setDragOverDate] = useState<string | null>(null);
@@ -118,6 +119,7 @@ export default function Calendar() {
 
   const fetchProjects = useCallback(async () => {
     setLoadingProjects(true);
+    setProjectsError(null);
     try {
       // Fetch all projects (up to a high limit so we get everything)
       const res = await fetch(`${API_BASE}/projects?limit=500&sort=newest`, {
@@ -126,9 +128,11 @@ export default function Calendar() {
       if (res.ok) {
         const data = await res.json();
         setProjects(data.projects || []);
+      } else {
+        setProjectsError('Failed to load projects.');
       }
     } catch {
-      // ignore
+      setProjectsError('Network error — could not load projects.');
     }
     setLoadingProjects(false);
   }, [token]);
@@ -482,6 +486,17 @@ export default function Calendar() {
                     <div key={i} className="h-12 bg-slate-100 rounded-lg animate-pulse" />
                   ))}
                 </div>
+              ) : projectsError ? (
+                <div className="text-center py-6">
+                  <div className="text-2xl mb-2">⚠️</div>
+                  <p className="text-xs text-red-600 mb-3">{projectsError}</p>
+                  <button
+                    onClick={fetchProjects}
+                    className="px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 hover:bg-red-200 rounded-lg transition-colors"
+                  >
+                    Retry
+                  </button>
+                </div>
               ) : unscheduledProjects.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-3xl mb-2">📭</div>
@@ -553,9 +568,12 @@ export default function Calendar() {
 
       {/* Error toast */}
       {error && (
-        <div className="fixed bottom-6 right-6 z-50 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl shadow-lg text-sm flex items-center gap-2">
+        <div className="fixed bottom-6 right-6 z-50 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl shadow-lg text-sm flex items-center gap-3">
           <span>{error}</span>
-          <button onClick={() => setError(null)} className="ml-2 text-red-500 hover:text-red-700">
+          <button onClick={fetchEvents} className="text-xs font-medium bg-red-100 hover:bg-red-200 px-2 py-1 rounded-md transition-colors">
+            Retry
+          </button>
+          <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
