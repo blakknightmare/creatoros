@@ -1,19 +1,36 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
+
+// Direct imports — smaller pages kept eager for instant navigation
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import BrandProfile from './pages/BrandProfile';
-import Generate from './pages/Generate';
 import ProjectDetail from './pages/ProjectDetail';
 import Onboarding from './pages/Onboarding';
-import Batch from './pages/Batch';
 import Pricing from './pages/Pricing';
-import Calendar from './pages/Calendar';
-import Analytics from './pages/Analytics';
 import Landing from './Landing';
+
+// Lazy-loaded pages — larger bundles (>15KB) loaded on demand
+const Batch = lazy(() => import('./pages/Batch'));
+const Calendar = lazy(() => import('./pages/Calendar'));
+const Analytics = lazy(() => import('./pages/Analytics'));
+const Generate = lazy(() => import('./pages/Generate'));
+
+/** Minimal spinner shown while a lazy page chunk loads. */
+function PageLoader() {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600" />
+        <span className="text-sm text-slate-400">Loading...</span>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -53,7 +70,9 @@ export default function App() {
             path="/generate"
             element={
               <ProtectedRoute requireBrandProfile>
-                <Generate />
+                <Suspense fallback={<PageLoader />}>
+                  <Generate />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -69,7 +88,9 @@ export default function App() {
             path="/batch"
             element={
               <ProtectedRoute requireBrandProfile>
-                <Batch />
+                <Suspense fallback={<PageLoader />}>
+                  <Batch />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -77,7 +98,9 @@ export default function App() {
             path="/calendar"
             element={
               <ProtectedRoute requireBrandProfile>
-                <Calendar />
+                <Suspense fallback={<PageLoader />}>
+                  <Calendar />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -85,7 +108,9 @@ export default function App() {
             path="/analytics"
             element={
               <ProtectedRoute requireBrandProfile>
-                <Analytics />
+                <Suspense fallback={<PageLoader />}>
+                  <Analytics />
+                </Suspense>
               </ProtectedRoute>
             }
           />
