@@ -17,6 +17,7 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   loading: boolean;
+  authError: string | null;
   hasBrandProfile: boolean;
   setHasBrandProfile: (v: boolean) => void;
   tier: string;
@@ -25,6 +26,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  retryAuth: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -65,36 +67,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [token, fetchSubscription]);
 
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  const verifyToken = useCallback(async () => {
+    const currentToken = localStorage.getItem('token');
+    if (!currentToken) {
+      setLoading(false);
+      return;
+    }
+    setAuthError(null);
+    try {
+      const res = await fetch(`${API_BASE}/auth/me`, {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        setHasBrandProfile(data.user.has_brand_profile || false);
+        setTier(data.user.tier || 'free');
+        await fetchSubscription(currentToken);
+      } else {
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+      }
+    } catch {
+      setAuthError('Unable to connect to the server. Check your connection and try again.');
+    }
+    setLoading(false);
+  }, [fetchSubscription]);
+
+  const retryAuth = useCallback(() => {
+    setLoading(true);
+    setAuthError(null);
+    verifyToken();
+  }, [verifyToken]);
+
   // On mount, check if existing token is still valid
   useEffect(() => {
-    async function verifyToken() {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await fetch(`${API_BASE}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-          setHasBrandProfile(data.user.has_brand_profile || false);
-          setTier(data.user.tier || 'free');
-          // Also fetch subscription for usage counts
-          await fetchSubscription(token);
-        } else {
-          // Token invalid, clear it
-          localStorage.removeItem('token');
-          setToken(null);
-          setUser(null);
-        }
-      } catch {
-        // Network error, keep token for retry
-      }
+    if (token) {
+      verifyToken();
+    } else {
       setLoading(false);
     }
-    verifyToken();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -161,7 +176,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, hasBrandProfile, setHasBrandProfile, tier, dailyUsage, refreshUsage, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, authError, hasBrandProfile, setHasBrandProfile, tier, dailyUsage, refreshUsage, login, signup, logout, retryAuth }}>
       {children}
     </AuthContext.Provider>
   );

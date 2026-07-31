@@ -49,6 +49,7 @@ export default function Dashboard() {
   // Project list state
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projectsError, setProjectsError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState(0);
 
   // Stats state
@@ -58,6 +59,7 @@ export default function Dashboard() {
     projectsThisWeek: 0,
   });
   const [loadingStats, setLoadingStats] = useState(true);
+  const [statsError, setStatsError] = useState<string | null>(null);
 
   // Filter state
   const [typeFilter, setTypeFilter] = useState<string>('all');
@@ -75,6 +77,7 @@ export default function Dashboard() {
 
   // Fetch stats
   const fetchStats = useCallback(async () => {
+    setStatsError(null);
     try {
       const res = await fetch(`${API_BASE}/projects/stats`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -82,9 +85,11 @@ export default function Dashboard() {
       if (res.ok) {
         const data = await res.json();
         setStats(data);
+      } else {
+        setStatsError('Failed to load stats.');
       }
     } catch {
-      // ignore
+      setStatsError('Network error — could not load stats.');
     }
     setLoadingStats(false);
   }, [token]);
@@ -92,6 +97,7 @@ export default function Dashboard() {
   // Fetch projects with filters
   const fetchProjects = useCallback(async () => {
     setLoadingProjects(true);
+    setProjectsError(null);
     try {
       const params = new URLSearchParams();
       if (typeFilter !== 'all') params.set('type', typeFilter);
@@ -106,9 +112,11 @@ export default function Dashboard() {
         const data = await res.json();
         setProjects(data.projects || []);
         setTotalCount(data.count || 0);
+      } else {
+        setProjectsError('Failed to load projects.');
       }
     } catch {
-      // ignore
+      setProjectsError('Network error — could not load projects.');
     }
     setLoadingProjects(false);
   }, [token, typeFilter, sortOrder, searchQuery]);
@@ -294,6 +302,8 @@ export default function Dashboard() {
                     <div className="text-2xl font-bold text-slate-900">
                       {loadingStats ? (
                         <span className="inline-block w-8 h-7 bg-slate-200 rounded animate-pulse" />
+                      ) : statsError ? (
+                        <span className="text-sm font-normal text-red-400">Error</span>
                       ) : (
                         stats.totalProjects
                       )}
@@ -313,6 +323,8 @@ export default function Dashboard() {
                     <div className="text-2xl font-bold text-slate-900">
                       {loadingStats ? (
                         <span className="inline-block w-20 h-7 bg-slate-200 rounded animate-pulse" />
+                      ) : statsError ? (
+                        <span className="text-sm font-normal text-red-400">Error</span>
                       ) : stats.mostUsedType ? (
                         TYPE_LABELS[stats.mostUsedType] || stats.mostUsedType
                       ) : (
@@ -334,6 +346,8 @@ export default function Dashboard() {
                     <div className="text-2xl font-bold text-slate-900">
                       {loadingStats ? (
                         <span className="inline-block w-8 h-7 bg-slate-200 rounded animate-pulse" />
+                      ) : statsError ? (
+                        <span className="text-sm font-normal text-red-400">Error</span>
                       ) : (
                         stats.projectsThisWeek
                       )}
@@ -343,6 +357,19 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
+            {/* Stats error banner */}
+            {statsError && (
+              <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 flex items-center justify-between">
+                <span>{statsError}</span>
+                <button
+                  onClick={fetchStats}
+                  className="px-3 py-1.5 text-xs font-medium bg-red-100 hover:bg-red-200 rounded-lg transition-colors"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
 
             {/* Quick actions */}
             <div className="mb-8 flex flex-wrap gap-3">
@@ -523,7 +550,23 @@ export default function Dashboard() {
               )}
 
               {/* Project list */}
-              {loadingProjects ? (
+              {projectsError ? (
+                <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+                  <div className="text-4xl mb-3">⚠️</div>
+                  <h3 className="text-lg font-semibold text-red-800 mb-2">
+                    Could not load projects
+                  </h3>
+                  <p className="text-sm text-red-600 mb-5">
+                    {projectsError}
+                  </p>
+                  <button
+                    onClick={fetchProjects}
+                    className="px-5 py-2.5 text-sm font-semibold bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors shadow-sm"
+                  >
+                    Retry
+                  </button>
+                </div>
+              ) : loadingProjects ? (
                 /* Loading skeleton */
                 <div className="space-y-3">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -544,24 +587,24 @@ export default function Dashboard() {
               ) : projects.length === 0 ? (
                 /* Empty state */
                 totalCount === 0 && !searchQuery.trim() && typeFilter === 'all' ? (
-                  /* No projects at all */
+                  /* No projects at all — user has brand profile */
                   <div className="rounded-2xl border border-dashed border-slate-300 bg-white/50 p-12 text-center">
-                    <div className="text-5xl mb-4">✨</div>
-                    <h3 className="text-lg font-semibold text-slate-700 mb-2">
-                      No projects yet
+                    <div className="text-5xl mb-4">🚀</div>
+                    <h3 className="text-xl font-semibold text-slate-800 mb-2">
+                      Your brand is set up!
                     </h3>
                     <p className="text-slate-500 max-w-md mx-auto mb-6">
-                      Head over to the Generate page to create your first piece of on-brand
-                      content. Your generations will appear here.
+                      Time to create your first piece of content. Generate on-brand
+                      posts, captions, newsletters, and more — all tailored to your brand profile.
                     </p>
                     <Link
                       to="/generate"
-                      className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-brand-600 text-white rounded-xl hover:bg-brand-700 transition-colors shadow-sm"
+                      className="inline-flex items-center gap-2 px-8 py-3.5 text-base font-semibold bg-brand-600 text-white rounded-xl hover:bg-brand-700 transition-colors shadow-md"
                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                       </svg>
-                      Generate your first piece of content
+                      Generate Content →
                     </Link>
                   </div>
                 ) : (

@@ -338,8 +338,15 @@ export default function Generate() {
 
         {/* Error */}
         {error && (
-          <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
-            {error}
+          <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+            <span>{error}</span>
+            <button
+              onClick={handleGenerate}
+              disabled={generating}
+              className="ml-3 px-3 py-1.5 text-xs font-medium bg-red-100 hover:bg-red-200 rounded-lg transition-colors disabled:opacity-50"
+            >
+              Retry
+            </button>
           </div>
         )}
 

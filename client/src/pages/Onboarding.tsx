@@ -179,12 +179,15 @@ export default function Onboarding() {
 
           {/* Step 0: Describe */}
           {step === 0 && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">Describe your business in a sentence</h2>
                 <p className="text-sm text-slate-500 mt-1">
                   Just one sentence is enough — the AI will do the rest.
                 </p>
+              </div>
+              <div className="px-4 py-3 rounded-lg bg-brand-50 border border-brand-100 text-sm text-brand-700">
+                <span className="font-medium">💡 Tip:</span> Keep it simple — one sentence is all you need. E.g., <em>"I help busy parents meal prep for the week."</em>
               </div>
               <textarea
                 value={description}
@@ -214,7 +217,7 @@ export default function Onboarding() {
 
           {/* Step 1: More context */}
           {step === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">Tell us more about what you do</h2>
                 <p className="text-sm text-slate-500 mt-1">
@@ -234,12 +237,15 @@ export default function Onboarding() {
 
           {/* Step 2: Tone */}
           {step === 2 && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">What's your vibe?</h2>
                 <p className="text-sm text-slate-500 mt-1">
                   Choose the tone that best matches your brand voice. This will influence all future content.
                 </p>
+              </div>
+              <div className="px-4 py-3 rounded-lg bg-brand-50 border border-brand-100 text-sm text-brand-700">
+                <span className="font-medium">💡 Tip:</span> Pick the tone that best matches your brand's voice. You can change this anytime from your Brand Profile.
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {TONE_OPTIONS.map((tone) => (
@@ -262,7 +268,7 @@ export default function Onboarding() {
 
           {/* Step 3: Review */}
           {step === 3 && parsedProfile && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">Review your brand profile</h2>
                 <p className="text-sm text-slate-500 mt-1">
