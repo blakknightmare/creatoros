@@ -31,96 +31,145 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-6">
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CO</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">
-              KREO
-            </span>
-          </Link>
-
-          <div className="hidden sm:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                  location.pathname === link.to
-                    ? 'font-medium text-brand-700 bg-brand-50'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex fixed inset-y-0 left-0 w-64 flex-col bg-brand-900 border-r border-brand-800">
+        {/* Logo */}
+        <Link to="/dashboard" className="flex items-center gap-2.5 px-5 h-16 border-b border-white/10">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-md shadow-brand-500/30">
+            <span className="text-white font-bold text-sm">KR</span>
           </div>
-        </div>
+          <div className="flex flex-col leading-tight">
+            <span className="font-semibold text-lg tracking-tight text-white">KREO</span>
+            <span className="text-[10px] text-brand-300 tracking-wide uppercase">Create more, Post Less</span>
+          </div>
+        </Link>
 
-        <div className="flex items-center gap-3">
-          {/* Tier badge / Upgrade button */}
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`flex items-center gap-2.5 px-3 py-2.5 text-sm rounded-lg transition-colors ${
+                location.pathname === link.to
+                  ? 'font-semibold text-white bg-gradient-to-r from-brand-700 to-brand-800 shadow-inner'
+                  : 'text-brand-200 hover:text-white hover:bg-brand-800/60'
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  location.pathname === link.to ? 'bg-accent-400' : 'bg-brand-500'
+                }`}
+              />
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Tier badge / Upgrade */}
+        <div className="px-4 pb-4 space-y-3 border-t border-white/10 pt-4">
           {tier === 'pro' && (
-            <span className="px-3 py-1 bg-gradient-to-r from-brand-100 to-purple-100 text-brand-700 text-xs font-semibold rounded-full border border-brand-200">
+            <span className="inline-flex px-3 py-1 bg-gradient-to-r from-brand-700 to-brand-600 text-brand-100 text-xs font-semibold rounded-full border border-brand-500/50">
               Pro
             </span>
           )}
           {tier === 'agency' && (
-            <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 text-xs font-semibold rounded-full border border-amber-200">
+            <span className="inline-flex px-3 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 text-xs font-semibold rounded-full border border-amber-500/40">
               Agency
             </span>
           )}
-          {tier === 'agency' && (
-            <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 bg-white/60 text-amber-600 text-xs rounded-full border border-amber-300">
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              White-label
-            </span>
-          )}
+
           {isFree && (
             <a
               href={STRIPE_PRO_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg transition-colors"
+              className="block w-full py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 rounded-lg transition-all shadow-md shadow-brand-500/25 text-center"
             >
-              Upgrade
+              Upgrade to Pro
             </a>
           )}
 
           {/* Usage indicator — free tier only */}
           {isFree && dailyUsage.limit !== null && (
-            <div className="hidden sm:flex items-center gap-2">
-              <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] text-brand-300">Daily generations</span>
+                <span className={`text-[11px] font-semibold ${isAtLimit ? 'text-accent-400' : isNearLimit ? 'text-amber-400' : 'text-brand-200'}`}>
+                  {dailyUsage.count}/{dailyUsage.limit}
+                </span>
+              </div>
+              <div className="h-1.5 bg-brand-800 rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-300 ${
-                    isAtLimit ? 'bg-red-500' : isNearLimit ? 'bg-amber-500' : 'bg-brand-500'
+                    isAtLimit ? 'bg-accent-500' : isNearLimit ? 'bg-amber-500' : 'bg-brand-500'
                   }`}
                   style={{ width: `${usagePercent}%` }}
                 />
               </div>
-              <span className={`text-xs font-medium whitespace-nowrap ${
-                isAtLimit ? 'text-red-600' : isNearLimit ? 'text-amber-600' : 'text-slate-500'
-              }`}>
-                {dailyUsage.count}/{dailyUsage.limit}
-              </span>
             </div>
           )}
 
           <button
             onClick={logout}
-            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            className="w-full py-2.5 px-3 text-sm font-medium text-brand-200 hover:text-white hover:bg-brand-800/60 rounded-lg transition-colors text-left"
           >
             Log out
           </button>
         </div>
+      </aside>
+
+      {/* Mobile top bar */}
+      <nav className="md:hidden sticky top-0 z-20 bg-brand-900 border-b border-brand-800 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <Link to="/dashboard" className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center">
+              <span className="text-white font-bold text-xs">KR</span>
+            </div>
+            <span className="font-semibold text-white">KREO</span>
+          </Link>
+          <div className="flex items-center gap-2">
+            {isFree && (
+              <a
+                href={STRIPE_PRO_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-accent-500 rounded-lg"
+              >
+                Upgrade
+              </a>
+            )}
+            <button
+              onClick={logout}
+              className="px-3 py-1.5 text-xs font-medium text-brand-200 hover:text-white rounded-lg"
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-1 mt-3 overflow-x-auto -mx-4 px-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`px-3 py-1.5 text-xs rounded-lg whitespace-nowrap transition-colors ${
+                location.pathname === link.to
+                  ? 'font-semibold text-white bg-brand-700'
+                  : 'text-brand-200 hover:text-white hover:bg-brand-800'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </nav>
 
       {/* Main content */}
-      {children}
+      <div className="md:pl-64">
+        <main className="px-4 md:px-8 py-6 md:py-8 max-w-7xl mx-auto">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

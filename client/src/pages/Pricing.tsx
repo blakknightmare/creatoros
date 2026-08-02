@@ -85,7 +85,7 @@ export default function Pricing() {
   const { tier, user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-100 via-brand-50 to-white">
       {/* Header */}
       <header className="text-center pt-16 pb-8 px-6">
         <h1 className="text-4xl font-bold text-slate-900 mb-3">Simple, transparent pricing</h1>
@@ -109,12 +109,12 @@ export default function Pricing() {
                 key={t.name}
                 className={`relative rounded-2xl border-2 p-8 flex flex-col ${
                   t.highlight
-                    ? 'border-brand-500 bg-white shadow-xl shadow-brand-100/50 scale-[1.02]'
+                    ? 'border-brand-500 bg-white shadow-glow-brand scale-[1.02]'
                     : 'border-slate-200 bg-white shadow-sm'
                 }`}
               >
                 {t.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-brand-600 to-brand-700 text-white text-xs font-bold rounded-full uppercase tracking-wider">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-brand-600 to-accent-500 text-white text-xs font-bold rounded-full uppercase tracking-wider">
                     Most Popular
                   </div>
                 )}
@@ -165,7 +165,7 @@ export default function Pricing() {
                     rel="noopener noreferrer"
                     className={`block w-full py-3 px-6 rounded-xl text-center font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-[0.99] ${
                       t.highlight
-                        ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800'
+                        ? 'text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 shadow-accent-500/30'
                         : 'text-brand-700 bg-white border-2 border-brand-300 hover:border-brand-400 hover:bg-brand-50'
                     }`}
                   >

@@ -19,7 +19,7 @@ export default function ProtectedRoute({ children, requireBrandProfile }: Protec
 
   if (authError && !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-brand-50 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-100 via-brand-50 to-white px-4">
         <div className="w-full max-w-sm text-center">
           <div className="text-4xl mb-4">🔌</div>
           <h2 className="text-xl font-semibold text-slate-900 mb-2">
