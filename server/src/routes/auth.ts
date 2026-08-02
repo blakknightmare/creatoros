@@ -171,7 +171,7 @@ router.post('/forgot-password', async (req: AuthRequest, res: Response) => {
     );
     saveDb();
 
-    const resetLink = `https://creatoros.ctonew.app/reset-password?token=${encodeURIComponent(resetToken)}`;
+    const resetLink = `https://fccfa071c9fccf5910d8839bc124100a.ctonew.app/reset-password?token=${encodeURIComponent(resetToken)}`;
     const emailBody = 
       `Hi there,\n\n` +
       `We received a request to reset your KREO password. Click the link below to set a new password:\n\n` +
