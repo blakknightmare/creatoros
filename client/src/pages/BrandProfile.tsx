@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import AppLayout from '../components/AppLayout';
 
 const API_BASE = '/api';
 
@@ -206,69 +207,41 @@ export default function BrandProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600" />
-      </div>
+      <AppLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600" />
+        </div>
+      </AppLayout>
     );
   }
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50 flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="text-5xl mb-4">🏷️</div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">No brand profile yet</h1>
-          <p className="text-slate-600 mb-6">
-            Complete the onboarding wizard to set up your brand profile. It only takes 2 minutes.
-          </p>
-          <Link
-            to="/onboarding"
-            className="inline-block px-6 py-2.5 text-sm font-semibold bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors shadow-sm"
-          >
-            Set up your brand →
-          </Link>
+      <AppLayout>
+        <div className="flex items-center justify-center min-h-[60vh] px-4">
+          <div className="text-center max-w-md">
+            <div className="text-5xl mb-4">🏷️</div>
+            <h1 className="text-2xl font-bold text-slate-900 mb-2">No brand profile yet</h1>
+            <p className="text-slate-600 mb-6">
+              Complete the onboarding wizard to set up your brand profile. It only takes 2 minutes.
+            </p>
+            <Link
+              to="/onboarding"
+              className="inline-block px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-brand-600 to-brand-500 text-white rounded-lg hover:from-brand-700 hover:to-brand-600 transition-all shadow-sm"
+            >
+              Set up your brand →
+            </Link>
+          </div>
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
   const fieldKeys: EditableField[] = ['niche', 'audience', 'tone_of_voice', 'goals', 'key_offers'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-6">
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CO</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">KREO</span>
-          </Link>
-          <div className="hidden sm:flex items-center gap-1">
-            <Link
-              to="/dashboard"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/brand-profile"
-              className="px-3 py-1.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-lg"
-            >
-              Brand Profile
-            </Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link to="/dashboard" className="text-sm text-slate-500 hover:text-slate-700 transition-colors">
-            ← Back to Dashboard
-          </Link>
-        </div>
-      </nav>
-
-      {/* Main content */}
-      <main className="max-w-3xl mx-auto px-6 py-10">
+    <AppLayout>
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
           <div>
@@ -431,7 +404,7 @@ export default function BrandProfile() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

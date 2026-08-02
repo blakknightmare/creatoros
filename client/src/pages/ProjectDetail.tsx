@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import AppLayout from '../components/AppLayout';
 import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
@@ -38,7 +39,7 @@ const TYPE_ICONS: Record<string, string> = {
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user, logout, tier } = useAuth();
+  const { tier } = useAuth();
   const token = localStorage.getItem('token');
 
   const [project, setProject] = useState<Project | null>(null);
@@ -96,51 +97,8 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CO</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">
-              KREO
-            </span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1">
-            <Link
-              to="/dashboard"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/generate"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Generate
-            </Link>
-            <Link
-              to="/brand-profile"
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              Brand Profile
-            </Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-500">{user?.email}</span>
-          <button
-            onClick={logout}
-            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            Log out
-          </button>
-        </div>
-      </nav>
-
-      <main className="max-w-3xl mx-auto px-6 py-12">
+    <AppLayout>
+      <div className="max-w-3xl mx-auto">
         {/* Back button */}
         <button
           onClick={() => navigate('/dashboard')}
@@ -248,7 +206,7 @@ export default function ProjectDetail() {
             </div>
           </>
         ) : null}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

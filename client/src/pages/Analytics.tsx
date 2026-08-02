@@ -29,13 +29,13 @@ const TYPE_LABELS: Record<string, string> = {
 
 const TYPE_COLORS: Record<string, string> = {
   instagram: 'bg-gradient-to-r from-pink-400 to-rose-400',
-  linkedin: 'bg-gradient-to-r from-blue-400 to-sky-500',
+  linkedin: 'bg-gradient-to-r from-brand-400 to-brand-600',
   x_post: 'bg-gradient-to-r from-slate-700 to-slate-900',
   blog_post: 'bg-gradient-to-r from-emerald-400 to-teal-500',
   email_newsletter: 'bg-gradient-to-r from-amber-400 to-orange-400',
-  hooks: 'bg-gradient-to-r from-purple-400 to-violet-500',
-  ctas: 'bg-gradient-to-r from-cyan-400 to-blue-500',
-  hashtags: 'bg-gradient-to-r from-indigo-400 to-purple-500',
+  hooks: 'bg-gradient-to-r from-brand-500 to-brand-700',
+  ctas: 'bg-gradient-to-r from-accent-400 to-accent-600',
+  hashtags: 'bg-gradient-to-r from-brand-500 to-accent-500',
 };
 
 const TYPE_ICONS: Record<string, string> = {
@@ -436,7 +436,7 @@ export default function Analytics() {
           {/* Batch generations */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-xl">
+              <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-xl">
                 🎬
               </div>
               <div>

@@ -26,13 +26,13 @@ const TYPE_ICONS: Record<string, string> = {
 
 const TYPE_COLORS: Record<string, string> = {
   instagram: 'from-pink-500 to-purple-500',
-  linkedin: 'from-blue-600 to-blue-400',
+  linkedin: 'from-brand-600 to-brand-400',
   x_post: 'from-slate-800 to-slate-600',
   blog_post: 'from-emerald-600 to-teal-400',
   email_newsletter: 'from-amber-500 to-orange-400',
-  hooks: 'from-violet-600 to-purple-400',
-  ctas: 'from-rose-600 to-pink-400',
-  hashtags: 'from-cyan-600 to-blue-400',
+  hooks: 'from-brand-600 to-purple-400',
+  ctas: 'from-accent-600 to-accent-400',
+  hashtags: 'from-brand-500 to-accent-500',
 };
 
 interface GenerationResult {

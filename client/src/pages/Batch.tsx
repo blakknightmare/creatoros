@@ -369,7 +369,7 @@ export default function Batch() {
         {/* Header */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-xl shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 flex items-center justify-center text-xl shadow-sm">
               🎬
             </div>
             <div>
@@ -451,7 +451,7 @@ export default function Batch() {
                     </div>
                     <button
                       onClick={handleUseSample}
-                      className="px-4 py-2 text-sm font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition-colors"
+                      className="px-4 py-2 text-sm font-medium text-brand-600 bg-brand-50 border border-brand-200 rounded-lg hover:bg-brand-100 transition-colors"
                     >
                       ✨ Use sample transcript
                     </button>
@@ -477,7 +477,7 @@ export default function Batch() {
             <button
               onClick={handleGenerate}
               disabled={inputMethod === 'paste' && transcript.trim().length < 50}
-              className="mt-5 w-full py-4 px-6 rounded-xl text-white font-bold text-base bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl active:scale-[0.99] flex items-center justify-center gap-2"
+              className="mt-5 w-full py-4 px-6 rounded-xl text-white font-bold text-base bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl active:scale-[0.99] flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -490,11 +490,11 @@ export default function Batch() {
         {/* Loading state */}
         {generating && (
           <div className="mb-10">
-            <div className="rounded-2xl border border-purple-200 bg-white p-10 shadow-sm">
+            <div className="rounded-2xl border border-brand-200 bg-white p-10 shadow-sm">
               <div className="flex flex-col items-center text-center">
                 {/* Animated icon */}
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center mb-6 animate-pulse">
-                  <svg className="w-10 h-10 text-purple-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-100 to-accent-100 flex items-center justify-center mb-6 animate-pulse">
+                  <svg className="w-10 h-10 text-brand-600 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
@@ -514,7 +514,7 @@ export default function Batch() {
                         i < progressIndex
                           ? 'text-green-700 bg-green-50'
                           : i === progressIndex
-                          ? 'text-purple-700 bg-purple-50 font-medium'
+                          ? 'text-brand-700 bg-brand-50 font-medium'
                           : 'text-slate-300'
                       }`}
                     >
@@ -523,7 +523,7 @@ export default function Batch() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
                       ) : i === progressIndex ? (
-                        <svg className="w-4 h-4 flex-shrink-0 animate-spin text-purple-500" fill="none" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 flex-shrink-0 animate-spin text-brand-500" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
@@ -675,7 +675,7 @@ export default function Batch() {
                     </div>
                     <div className="space-y-2">
                       <div>
-                        <span className="text-xs font-semibold text-purple-600">Hook:</span>
+                        <span className="text-xs font-semibold text-brand-600">Hook:</span>
                         {isEditing ? (
                           <div className="flex gap-2 mt-1">
                             <textarea value={editValue} onChange={(e) => setEditValue(e.target.value)} rows={2} className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
@@ -687,7 +687,7 @@ export default function Batch() {
                         )}
                       </div>
                       <div>
-                        <span className="text-xs font-semibold text-blue-600">Visual:</span>
+                        <span className="text-xs font-semibold text-accent-600">Visual:</span>
                         <p className="text-sm text-slate-600 mt-0.5">{reel.visual}</p>
                       </div>
                       <div>
