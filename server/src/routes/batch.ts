@@ -220,7 +220,7 @@ Ready to take action? Pick ONE of these and implement it today — not next week
 If you're looking for more structured support, ${offers} is designed specifically for ${audience} who are done spinning their wheels and ready for real momentum.
 
 Talk soon,
-[CreatorOS Demo]
+[KREO Demo]
 
 P.S. Forward this to a ${audience} friend who needs to hear it. And if you reply with your biggest ${niche} challenge, I'll send you my best resource for it.`,
     },
