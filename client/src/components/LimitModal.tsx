@@ -33,7 +33,7 @@ export default function LimitModal({ isOpen, onClose, dailyCount }: LimitModalPr
         </p>
 
         {/* Pricing highlight */}
-        <div className="bg-gradient-to-br from-brand-50 to-purple-50 border border-brand-200 rounded-xl p-4 mb-6">
+        <div className="bg-gradient-to-br from-brand-50 to-accent-50 border border-brand-200 rounded-xl p-4 mb-6">
           <div className="flex items-center justify-between mb-2">
             <span className="font-semibold text-brand-800">KREO Pro</span>
             <span className="text-lg font-bold text-brand-700">£19<span className="text-sm font-normal text-brand-500">/month</span></span>

@@ -273,7 +273,7 @@ export default function Calendar() {
             posting day.
           </p>
 
-          <div className="rounded-2xl border-2 border-brand-200 bg-gradient-to-br from-brand-50 to-purple-50 p-8 mb-8">
+          <div className="rounded-2xl border-2 border-brand-200 bg-gradient-to-br from-brand-50 to-accent-50 p-8 mb-8">
             <div className="flex items-center justify-center gap-2 mb-2">
               <span className="text-2xl">🔒</span>
               <h2 className="text-xl font-semibold text-slate-800">Pro Feature</h2>

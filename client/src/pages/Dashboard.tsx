@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import AppLayout from '../components/AppLayout';
 import { addWatermark } from '../utils/watermark';
 
 const API_BASE = '/api';
@@ -44,7 +45,7 @@ const TYPE_ICONS: Record<string, string> = {
 const ALL_TYPES = Object.keys(TYPE_LABELS);
 
 export default function Dashboard() {
-  const { user, logout, hasBrandProfile, tier } = useAuth();
+  const { hasBrandProfile, tier } = useAuth();
 
   // Project list state
   const [projects, setProjects] = useState<Project[]>([]);
@@ -231,56 +232,9 @@ export default function Dashboard() {
     setSearchQuery('');
   };
 
-  // Nav component (shared)
-  const Nav = (
-    <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-      <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CO</span>
-          </div>
-          <span className="font-semibold text-lg tracking-tight text-slate-800">
-            KREO
-          </span>
-        </div>
-        <div className="hidden sm:flex items-center gap-1">
-          <Link
-            to="/dashboard"
-            className="px-3 py-1.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-lg"
-          >
-            Dashboard
-          </Link>
-          <Link
-            to="/generate"
-            className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            Generate
-          </Link>
-          <Link
-            to="/brand-profile"
-            className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            Brand Profile
-          </Link>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-slate-500">{user?.email}</span>
-        <button
-          onClick={logout}
-          className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-        >
-          Log out
-        </button>
-      </div>
-    </nav>
-  );
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-brand-50">
-      {Nav}
-
-      <main className="max-w-6xl mx-auto px-6 py-12">
+    <AppLayout>
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
@@ -412,21 +366,21 @@ export default function Dashboard() {
             {/* Video to Content — flagship feature card */}
             <Link
               to="/batch"
-              className="block mb-8 rounded-2xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group"
+              className="block mb-8 rounded-2xl border-2 border-brand-200 bg-gradient-to-r from-brand-50 to-accent-50 p-6 shadow-sm hover:shadow-md hover:border-brand-300 transition-all group"
             >
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-2xl shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 flex items-center justify-center text-2xl shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                   🎬
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h2 className="text-lg font-bold text-slate-900">Video to Content</h2>
-                    <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-600 text-white">NEW</span>
+                    <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-accent-500 text-white">NEW</span>
                   </div>
                   <p className="text-sm text-slate-600 mb-3">
                     Drop in a long-form video transcript and get <strong>weeks</strong> of content out — TikTok ideas, Reels, captions, hooks, newsletter, carousel, and a full blog article. All generated in one batch, perfectly on-brand.
                   </p>
-                  <div className="flex items-center gap-1 text-sm font-semibold text-purple-700 group-hover:text-purple-800">
+                  <div className="flex items-center gap-1 text-sm font-semibold text-brand-700 group-hover:text-brand-800">
                     <span>Try it now</span>
                     <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -818,7 +772,7 @@ export default function Dashboard() {
             </div>
           </>
         )}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

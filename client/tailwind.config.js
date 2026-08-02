@@ -5,17 +5,30 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#f0f4ff',
-          100: '#dbe4ff',
-          200: '#bac8ff',
-          300: '#91a7ff',
-          400: '#748ffc',
-          500: '#5c7cfa',
-          600: '#4c6ef5',
-          700: '#4263eb',
-          800: '#3b5bdb',
-          900: '#364fc7',
-          950: '#2b3fa0',
+          50: '#f5f3ff',   // violet-50
+          100: '#ede9fe',  // violet-100
+          200: '#ddd6fe',  // violet-200
+          300: '#c4b5fd',  // violet-300
+          400: '#a78bfa',  // violet-400
+          500: '#8b5cf6',  // violet-500 (primary)
+          600: '#7c3aed',  // violet-600 (primary hover)
+          700: '#6d28d9',  // violet-700
+          800: '#5b21b6',  // violet-800
+          900: '#4c1d95',  // violet-900
+          950: '#3b1471',  // violet-950
+        },
+        accent: {
+          50: '#fff5f5',
+          100: '#ffe3e3',
+          200: '#ffc9c9',
+          300: '#ffa8a8',
+          400: '#ff8787',
+          500: '#ff6b6b',  // coral-500 (accent)
+          600: '#fa5252',  // coral-600 (accent hover)
+          700: '#f03e3e',
+          800: '#e03131',
+          900: '#c92a2a',
+          950: '#a61e2e',
         },
       },
     },

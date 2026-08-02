@@ -17,4 +17,20 @@
   .animate-fade-in {
     animation: fade-in 0.35s ease-out;
   }
+  /* Brand gradient text (violet → coral) */
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-brand-500 via-brand-400 to-accent-400 bg-clip-text text-transparent;
+  }
+  /* Subtle dotted/grid pattern for dark hero sections */
+  .bg-grid-dark {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(196, 181, 253, 0.12) 1px, transparent 0);
+    background-size: 28px 28px;
+  }
+  /* Violet glow shadow for highlighted cards */
+  .shadow-glow-brand {
+    box-shadow:
+      0 0 0 1px rgba(139, 92, 246, 0.35),
+      0 8px 40px -8px rgba(124, 58, 237, 0.55);
+  }
 }
