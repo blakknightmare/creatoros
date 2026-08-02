@@ -29,7 +29,7 @@ export default function LimitModal({ isOpen, onClose, dailyCount }: LimitModalPr
           You've used all {dailyCount} generations today
         </h2>
         <p className="text-slate-500 text-center text-sm mb-6">
-          The free tier includes 10 generations per day. Upgrade to Pro for unlimited generations and unlock your full content potential.
+          The free tier includes 10 generations per day. Upgrade to Pro for 50 generations per day and unlock your full content potential.
         </p>
 
         {/* Pricing highlight */}
@@ -41,7 +41,7 @@ export default function LimitModal({ isOpen, onClose, dailyCount }: LimitModalPr
           <ul className="space-y-1.5 text-sm text-slate-600">
             <li className="flex items-center gap-2">
               <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-              Unlimited generations
+              50 generations per day
             </li>
             <li className="flex items-center gap-2">
               <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>

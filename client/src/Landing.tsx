@@ -86,7 +86,7 @@ const PLANS = [
     price: '£19',
     period: '/month',
     tagline: 'For serious creators and small businesses.',
-    features: ['Unlimited generations', 'No watermark', 'Content calendar & analytics'],
+    features: ['50 generations per day', 'No watermark', 'Content calendar & analytics'],
     cta: 'Go Pro',
     to: '/pricing',
     highlight: true,
