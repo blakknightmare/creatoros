@@ -221,7 +221,7 @@ export default function BrandProfile() {
         <div className="flex items-center justify-center min-h-[60vh] px-4">
           <div className="text-center max-w-md">
             <div className="text-5xl mb-4">🏷️</div>
-            <h1 className="text-2xl font-bold text-slate-900 mb-2">No brand profile yet</h1>
+            <h1 className="text-2xl font-light text-slate-900 mb-2">No brand profile yet</h1>
             <p className="text-slate-600 mb-6">
               Complete the onboarding wizard to set up your brand profile. It only takes 2 minutes.
             </p>
@@ -245,7 +245,7 @@ export default function BrandProfile() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Brand Profile</h1>
+            <h1 className="text-3xl font-light text-slate-900">Brand Profile</h1>
             <p className="text-sm text-slate-500 mt-1">
               {profile.updated_at ? `Last updated ${formatDate(profile.updated_at)}` : 'No update timestamp available'}
             </p>

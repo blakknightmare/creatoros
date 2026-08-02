@@ -88,7 +88,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-gradient-to-br from-brand-100 via-brand-50 to-white">
       {/* Header */}
       <header className="text-center pt-16 pb-8 px-6">
-        <h1 className="text-4xl font-bold text-slate-900 mb-3">Simple, transparent pricing</h1>
+        <h1 className="text-4xl font-light text-slate-900 mb-3">Simple, transparent pricing</h1>
         <p className="text-lg text-slate-500 max-w-xl mx-auto">
           Choose the plan that fits your content needs. Upgrade anytime — your brand profile stays with you.
         </p>

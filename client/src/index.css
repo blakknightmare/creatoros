@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-weight: 400; /* regular body text — clean and readable */
+  }
+  h1, h2, h3, h4 {
+    font-weight: 300; /* thin/light for headings — the "skinny impact" look */
+    letter-spacing: -0.02em; /* Apple-style tight tracking */
+  }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }

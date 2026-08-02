@@ -36,7 +36,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-2.5 px-5 h-16 border-b border-white/10">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-md shadow-brand-500/30">
-            <span className="text-white font-bold text-sm">KR</span>
+            <span className="text-white font-semibold text-sm">KR</span>
           </div>
           <div className="flex flex-col leading-tight">
             <span className="font-semibold text-lg tracking-tight text-white">KREO</span>
@@ -84,7 +84,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
               href={STRIPE_PRO_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 rounded-lg transition-all shadow-md shadow-brand-500/25 text-center"
+              className="block w-full py-2.5 text-xs font-medium text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 rounded-lg transition-all shadow-md shadow-brand-500/25 text-center"
             >
               Upgrade to Pro
             </a>
@@ -124,7 +124,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         <div className="flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center">
-              <span className="text-white font-bold text-xs">KR</span>
+              <span className="text-white font-semibold text-xs">KR</span>
             </div>
             <span className="font-semibold text-white">KREO</span>
           </Link>
@@ -134,7 +134,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                 href={STRIPE_PRO_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-accent-500 rounded-lg"
+                className="px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-brand-600 to-accent-500 rounded-lg"
               >
                 Upgrade
               </a>

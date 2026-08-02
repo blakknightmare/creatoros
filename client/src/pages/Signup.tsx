@@ -49,13 +49,13 @@ export default function Signup() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-md shadow-brand-500/30">
-              <span className="text-white font-bold text-sm">KR</span>
+              <span className="text-white font-semibold text-sm">KR</span>
             </div>
             <span className="font-semibold text-lg tracking-tight text-slate-800">
               KREO
             </span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900">Create your account</h1>
+          <h1 className="text-2xl font-light text-slate-900">Create your account</h1>
           <p className="text-slate-500 mt-1">Get started with KREO</p>
         </div>
 
