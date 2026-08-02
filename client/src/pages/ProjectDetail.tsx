@@ -145,7 +145,7 @@ export default function ProjectDetail() {
                   {TYPE_ICONS[project.content_type] || '📄'}
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-900">
+                  <h1 className="text-2xl font-light text-slate-900">
                     {TYPE_LABELS[project.content_type] || project.content_type}
                   </h1>
                   {project.topic && (

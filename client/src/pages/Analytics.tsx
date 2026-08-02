@@ -175,7 +175,7 @@ export default function Analytics() {
       <AppLayout>
         <main className="max-w-6xl mx-auto px-6 py-12">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-slate-900">Analytics</h1>
+            <h1 className="text-3xl font-light text-slate-900">Analytics</h1>
             <p className="text-slate-500 mt-1">
               Track your content generation over time.
             </p>
@@ -206,7 +206,7 @@ export default function Analytics() {
       <AppLayout>
         <main className="max-w-6xl mx-auto px-6 py-12">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-slate-900">Analytics</h1>
+            <h1 className="text-3xl font-light text-slate-900">Analytics</h1>
             <p className="text-slate-500 mt-1">
               Track your content generation over time.
             </p>
@@ -258,7 +258,7 @@ export default function Analytics() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-slate-900">Analytics</h1>
+          <h1 className="text-3xl font-light text-slate-900">Analytics</h1>
           <p className="text-slate-500 mt-1">
             Track your content generation over time.
           </p>

@@ -237,7 +237,7 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
+          <h1 className="text-3xl font-light text-slate-900">Dashboard</h1>
           <p className="text-slate-500 mt-1">
             Welcome back! Here's an overview of your content.
           </p>

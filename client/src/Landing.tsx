@@ -112,7 +112,7 @@ export default function Landing() {
       <nav className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-brand-950/80 backdrop-blur-sm">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-md shadow-brand-500/30">
-            <span className="text-white font-bold text-sm tracking-tight">KR</span>
+            <span className="text-white font-semibold text-sm tracking-tight">KR</span>
           </div>
           <span className="font-semibold text-lg tracking-tight text-white">
             KREO
@@ -150,7 +150,7 @@ export default function Landing() {
               </Link>
               <Link
                 to="/signup"
-                className="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-brand-500 to-accent-500 text-white rounded-lg hover:from-brand-400 hover:to-accent-400 transition-all shadow-md shadow-brand-500/30"
+                className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-brand-500 to-accent-500 text-white rounded-lg hover:from-brand-400 hover:to-accent-400 transition-all shadow-md shadow-brand-500/30"
               >
                 Get Started
               </Link>
@@ -172,13 +172,13 @@ export default function Landing() {
             <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
             Now in Beta
           </div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-3xl leading-tight animate-fade-in-up [animation-delay:200ms]">
+          <h1 className="text-5xl md:text-6xl font-extralight tracking-tight text-white max-w-3xl leading-tight animate-fade-in-up [animation-delay:200ms]">
             Your AI-Powered{' '}
             <span className="text-gradient-brand">
               Content Manager
             </span>
           </h1>
-          <p className="mt-5 text-2xl md:text-3xl font-bold text-brand-200 tracking-tight animate-fade-in-up [animation-delay:350ms]">
+          <p className="mt-5 text-2xl md:text-3xl font-light text-brand-200 tracking-tight animate-fade-in-up [animation-delay:350ms]">
             Create more, Post Less.
           </p>
           <p className="mt-5 text-lg text-brand-100/80 max-w-xl leading-relaxed animate-fade-in-up [animation-delay:500ms]">
@@ -197,7 +197,7 @@ export default function Landing() {
           <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up [animation-delay:650ms]">
             <Link
               to="/signup"
-              className="w-full sm:w-auto px-7 py-3.5 text-sm font-semibold bg-gradient-to-r from-brand-500 to-accent-500 text-white rounded-xl hover:from-brand-400 hover:to-accent-400 transition-all shadow-lg shadow-brand-600/40 hover:shadow-accent-500/40 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto px-7 py-3.5 text-sm font-medium bg-gradient-to-r from-brand-500 to-accent-500 text-white rounded-xl hover:from-brand-400 hover:to-accent-400 transition-all shadow-lg shadow-brand-600/40 hover:shadow-accent-500/40 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]"
             >
               Get Started Free
             </Link>
@@ -222,7 +222,7 @@ export default function Landing() {
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-600 mb-2">
               How it works
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-light tracking-tight">
               On-brand content in 3 steps
             </h2>
           </div>
@@ -247,7 +247,7 @@ export default function Landing() {
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-600 mb-2">
               Features
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-light tracking-tight">
               Everything you need to stay visible
             </h2>
           </div>
@@ -285,7 +285,7 @@ export default function Landing() {
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-600 mb-2">
               Pricing
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-light tracking-tight">
               Simple, honest pricing
             </h2>
             <p className="mt-3 text-slate-600 max-w-xl mx-auto">
@@ -335,7 +335,7 @@ export default function Landing() {
                 </ul>
                 <Link
                   to={plan.to}
-                  className={`mt-8 block w-full py-3 px-6 rounded-xl text-center font-semibold text-sm transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] ${
+                  className={`mt-8 block w-full py-3 px-6 rounded-xl text-center font-medium text-sm transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] ${
                     plan.highlight
                       ? 'text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 shadow-accent-500/30'
                       : 'text-brand-700 bg-white border-2 border-brand-300 hover:border-brand-400 hover:bg-brand-50'
