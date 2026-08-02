@@ -228,7 +228,7 @@ export default function Generate() {
 
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-slate-900">Generate Content</h1>
+          <h1 className="text-3xl font-light text-slate-900">Generate Content</h1>
           <p className="text-slate-500 mt-1">
             Select a content type, describe your topic, and get on-brand content instantly.
           </p>

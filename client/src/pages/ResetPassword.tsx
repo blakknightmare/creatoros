@@ -64,7 +64,7 @@ export default function ResetPassword() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 mb-2">Invalid reset link</h1>
+            <h1 className="text-xl font-light text-slate-900 mb-2">Invalid reset link</h1>
             <p className="text-slate-500 text-sm">
               This password reset link is missing its token. Please request a new one.
             </p>
@@ -91,7 +91,7 @@ export default function ResetPassword() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 mb-2">Password reset successful</h1>
+            <h1 className="text-xl font-light text-slate-900 mb-2">Password reset successful</h1>
             <p className="text-slate-500 text-sm">
               Your password has been updated. You can now sign in with your new password.
             </p>
@@ -113,13 +113,13 @@ export default function ResetPassword() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-md shadow-brand-500/30">
-              <span className="text-white font-bold text-sm">KR</span>
+              <span className="text-white font-semibold text-sm">KR</span>
             </div>
             <span className="font-semibold text-lg tracking-tight text-slate-800">
               KREO
             </span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900">Set new password</h1>
+          <h1 className="text-2xl font-light text-slate-900">Set new password</h1>
           <p className="text-slate-500 mt-1">Choose a new password for your account</p>
         </div>
 

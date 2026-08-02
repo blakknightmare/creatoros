@@ -373,7 +373,7 @@ export default function Batch() {
               🎬
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Video to Content</h1>
+              <h1 className="text-3xl font-light text-slate-900">Video to Content</h1>
               <p className="text-slate-500 text-sm">One video transcript in, weeks of content out.</p>
             </div>
           </div>

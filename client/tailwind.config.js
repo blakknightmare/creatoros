@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Geist', 'system-ui', 'sans-serif'],
+      },
       keyframes: {
         fadeInUp: { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
         fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },

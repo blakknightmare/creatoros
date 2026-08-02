@@ -266,7 +266,7 @@ export default function Calendar() {
       <AppLayout>
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
           <div className="text-6xl mb-6">📅</div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-4">AI Content Calendar</h1>
+          <h1 className="text-3xl font-light text-slate-900 mb-4">AI Content Calendar</h1>
           <p className="text-lg text-slate-600 mb-8 max-w-lg mx-auto leading-relaxed">
             Plan your posting schedule effortlessly. Drag and drop your generated
             content onto dates, see your month at a glance, and never miss a
@@ -329,7 +329,7 @@ export default function Calendar() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Content Calendar</h1>
+            <h1 className="text-3xl font-light text-slate-900">Content Calendar</h1>
             <p className="text-slate-500 mt-1">Plan your posting schedule — drag projects onto dates.</p>
           </div>
           <div className="flex items-center gap-3">
