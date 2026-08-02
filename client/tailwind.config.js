@@ -3,6 +3,14 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      keyframes: {
+        fadeInUp: { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.7s ease-out both',
+        'fade-in': 'fadeIn 0.6s ease-out both',
+      },
       colors: {
         brand: {
           50: '#f5f3ff',   // violet-50
