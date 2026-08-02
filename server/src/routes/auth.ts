@@ -48,15 +48,15 @@ router.post('/signup', async (req: AuthRequest, res: Response) => {
 
     // Send welcome email (non-blocking — don't fail signup if email fails)
     const userEmail = email.toLowerCase().trim();
-    sendEmail(userEmail, 'Welcome to CreatorOS!', 
-      `Welcome to CreatorOS!\n\n` +
+    sendEmail(userEmail, 'Welcome to KREO!', 
+      `Welcome to KREO!\n\n` +
       `Hi there,\n\n` +
-      `Thanks for creating an account! With CreatorOS you can:\n` +
+      `Thanks for creating an account! With KREO you can:\n` +
       `• Generate on-brand content for TikTok, LinkedIn, X, blogs, and more\n` +
       `• Store your brand profile once — never re-explain your business to AI again\n` +
       `• Save projects, schedule posts on a calendar, and track your analytics\n\n` +
       `Get started by completing your brand setup, then head to the Generate page to create your first piece of content.\n\n` +
-      `— The CreatorOS Team\n`
+      `— The KREO Team\n`
     ).catch(() => {}); // Fire-and-forget
 
     res.status(201).json({
@@ -174,13 +174,13 @@ router.post('/forgot-password', async (req: AuthRequest, res: Response) => {
     const resetLink = `https://creatoros.ctonew.app/reset-password?token=${encodeURIComponent(resetToken)}`;
     const emailBody = 
       `Hi there,\n\n` +
-      `We received a request to reset your CreatorOS password. Click the link below to set a new password:\n\n` +
+      `We received a request to reset your KREO password. Click the link below to set a new password:\n\n` +
       `${resetLink}\n\n` +
       `This link will expire in 1 hour. If you didn't request a password reset, you can safely ignore this email.\n\n` +
-      `— The CreatorOS Team\n`;
+      `— The KREO Team\n`;
 
     // Fire-and-forget — don't fail the request if email sending fails
-    sendEmail(email.toLowerCase().trim(), 'Reset your CreatorOS password', emailBody).catch(() => {});
+    sendEmail(email.toLowerCase().trim(), 'Reset your KREO password', emailBody).catch(() => {});
 
     res.json({ message: 'If an account exists, a reset link has been sent' });
   } catch (err) {

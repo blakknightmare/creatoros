@@ -116,7 +116,7 @@ export default function ResetPassword() {
               <span className="text-white font-bold text-sm">CO</span>
             </div>
             <span className="font-semibold text-lg tracking-tight text-slate-800">
-              CreatorOS
+              KREO
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Set new password</h1>

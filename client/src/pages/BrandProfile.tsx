@@ -243,7 +243,7 @@ export default function BrandProfile() {
             <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">CO</span>
             </div>
-            <span className="font-semibold text-lg tracking-tight text-slate-800">CreatorOS</span>
+            <span className="font-semibold text-lg tracking-tight text-slate-800">KREO</span>
           </Link>
           <div className="hidden sm:flex items-center gap-1">
             <Link

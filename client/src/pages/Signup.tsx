@@ -52,11 +52,11 @@ export default function Signup() {
               <span className="text-white font-bold text-sm">CO</span>
             </div>
             <span className="font-semibold text-lg tracking-tight text-slate-800">
-              CreatorOS
+              KREO
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Create your account</h1>
-          <p className="text-slate-500 mt-1">Get started with CreatorOS</p>
+          <p className="text-slate-500 mt-1">Get started with KREO</p>
         </div>
 
         <form

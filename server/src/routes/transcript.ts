@@ -106,7 +106,7 @@ async function extractYouTubeTranscript(videoId: string): Promise<string> {
   // Fetch the YouTube video page
   const response = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (compatible; CreatorOS/1.0)',
+      'User-Agent': 'Mozilla/5.0 (compatible; KREO/1.0)',
       'Accept-Language': 'en-US,en;q=0.9',
     },
   });

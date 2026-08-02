@@ -57,7 +57,7 @@ async function start() {
   await initDb();
 
   app.listen(PORT, () => {
-    console.log(`CreatorOS server running on http://localhost:${PORT}`);
+    console.log(`KREO server running on http://localhost:${PORT}`);
   });
 }
 

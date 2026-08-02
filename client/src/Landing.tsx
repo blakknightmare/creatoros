@@ -13,7 +13,7 @@ export default function Landing() {
             <span className="text-white font-bold text-sm">CO</span>
           </div>
           <span className="font-semibold text-lg tracking-tight text-slate-800">
-            CreatorOS
+            KREO
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export default function Landing() {
           </span>
         </h1>
         <p className="mt-6 text-lg text-slate-600 max-w-xl leading-relaxed">
-          Describe your business once. CreatorOS learns your brand and generates
+          Describe your business once. KREO learns your brand and generates
           on-brand content across every platform — TikTok, LinkedIn, blogs,
           newsletters, and more. No re-explaining, ever.
         </p>
@@ -125,7 +125,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-400">
-        &copy; {new Date().getFullYear()} CreatorOS. All rights reserved.
+        &copy; {new Date().getFullYear()} KREO. All rights reserved.
       </footer>
     </div>
   );
