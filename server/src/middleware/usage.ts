@@ -3,6 +3,7 @@ import { getDb, saveDb } from '../db.js';
 import { AuthRequest } from './auth.js';
 
 const FREE_TIER_LIMIT = 10;
+const PRO_TIER_LIMIT = 50;
 
 export interface UsageInfo {
   tier: string;
@@ -31,8 +32,8 @@ export async function getUserUsage(userId: number): Promise<UsageInfo> {
 
   // Reset count if it's a new day
   const effectiveCount = date === today ? (count || 0) : 0;
-  const isLimited = tier === 'free';
-  const dailyLimit = isLimited ? FREE_TIER_LIMIT : Infinity;
+  const isLimited = tier === 'free' || tier === 'pro';
+  const dailyLimit = isLimited ? (tier === 'pro' ? PRO_TIER_LIMIT : FREE_TIER_LIMIT) : Infinity;
 
   return { tier, dailyCount: effectiveCount, dailyLimit, isLimited };
 }
@@ -46,10 +47,10 @@ export async function checkUsageLimit(req: AuthRequest, res: Response, next: Nex
     const userId = req.userId!;
     const usage = await getUserUsage(userId);
 
-    if (usage.isLimited && usage.dailyCount >= FREE_TIER_LIMIT) {
+    if (usage.isLimited && usage.dailyCount >= usage.dailyLimit) {
       res.status(429).json({
         error: 'daily_limit_reached',
-        limit: FREE_TIER_LIMIT,
+        limit: usage.dailyLimit,
         tier: usage.tier,
         upgrade_url: '/pricing',
       });
