@@ -167,7 +167,8 @@ export default function Landing() {
         <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-brand-600/30 blur-3xl animate-pulse-glow" />
         <div className="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full bg-accent-500/20 blur-3xl animate-drift-glow" />
 
-        <div className="relative flex flex-col items-center justify-center px-6 py-24 md:py-32 text-center">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:py-28 lg:grid-cols-2 lg:gap-16 lg:text-left">
+          <div className="text-center lg:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-brand-200 text-xs font-medium mb-6 backdrop-blur-sm animate-fade-in">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
             Now in Beta
@@ -187,13 +188,6 @@ export default function Landing() {
             newsletters, and more. No re-explaining, ever.
           </p>
 
-          <div className="mt-10 w-full max-w-3xl rounded-2xl border border-white/15 bg-white/10 p-3 shadow-2xl backdrop-blur-sm animate-fade-in-up [animation-delay:575ms] lg:absolute lg:left-[calc(50%+20rem)] lg:top-1/2 lg:w-80 lg:-translate-y-1/2 lg:mt-0">
-            <div className="rounded-xl bg-brand-950/80 p-3 text-left">
-              <div className="flex gap-1.5 border-b border-white/10 pb-3"><span className="h-2 w-2 rounded-full bg-accent-400" /><span className="h-2 w-2 rounded-full bg-brand-400" /><span className="h-2 w-2 rounded-full bg-white/30" /></div>
-              <div className="flex gap-3 pt-3"><div className="w-10 space-y-2"><div className="h-6 rounded bg-brand-500/50" /><div className="h-2 rounded bg-white/15" /><div className="h-2 rounded bg-white/15" /><div className="h-2 rounded bg-white/15" /></div><div className="flex-1 space-y-3"><div><div className="h-2 w-20 rounded bg-brand-200/50" /><div className="mt-2 h-2 w-32 rounded bg-white/20" /></div><div className="grid grid-cols-2 gap-2"><div className="h-16 rounded-lg bg-gradient-to-br from-brand-500/50 to-brand-700/30" /><div className="h-16 rounded-lg bg-gradient-to-br from-accent-500/50 to-brand-700/30" /></div><div className="h-12 rounded-lg bg-white/10" /></div></div>
-            </div>
-          </div>
-
           <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up [animation-delay:650ms]">
             <Link
               to="/signup"
@@ -212,6 +206,11 @@ export default function Landing() {
           <p className="mt-4 text-xs text-brand-200/70">
             No credit card required. Set up your brand in 2 minutes.
           </p>
+          </div>
+          <div className="relative animate-fade-in-up [animation-delay:575ms] lg:justify-self-end">
+            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-500/30 to-accent-500/20 blur-xl" />
+            <img src="/images/creator-filming.jpg" alt="Creator filming content in a studio" className="relative h-[22rem] w-full max-w-lg rounded-[1.75rem] object-cover shadow-2xl ring-1 ring-white/20 animate-float hover:scale-105 transition-transform duration-300 md:h-[28rem]" />
+          </div>
         </div>
       </main>
 
@@ -229,13 +228,30 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {STEPS.map((step, i) => (
               <AnimatedItem key={step.title} delay={i * 150} className="text-center md:text-left">
-                <div className="mx-auto md:mx-0 w-12 h-12 rounded-xl bg-gradient-to-br from-brand-600 to-brand-500 text-white font-bold flex items-center justify-center text-lg mb-4 shadow-md shadow-brand-600/30">
+                <div className="mx-auto md:mx-0 w-12 h-12 rounded-xl bg-gradient-to-br from-brand-600 to-brand-500 text-white font-bold flex items-center justify-center text-lg mb-4 shadow-md shadow-brand-600/30 animate-float">
                   {i + 1}
                 </div>
                 <h3 className="font-semibold text-slate-900 mb-2">{step.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
               </AnimatedItem>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* See it in action */}
+      <section className="bg-brand-50/60 text-slate-900">
+        <div className="max-w-5xl mx-auto px-6 py-24">
+          <div className="text-center mb-14"><p className="text-sm font-semibold uppercase tracking-wider text-brand-600 mb-2">See it in action</p><h2 className="text-3xl md:text-4xl font-light tracking-tight">Your content, wherever inspiration strikes</h2></div>
+          <div className="space-y-16">
+            <AnimatedItem delay={100} className="grid items-center gap-10 md:grid-cols-2">
+              <img src="/images/creator-outdoor.jpg" alt="Creator filming outdoors in the city" loading="lazy" className="h-72 w-full rounded-2xl object-cover shadow-lg hover:scale-[1.02] transition-transform duration-300 animate-float-delayed" />
+              <div><h3 className="text-2xl font-semibold mb-3">Create anywhere</h3><p className="text-slate-600 leading-relaxed">Film in the street, edit on the go. KREO turns your raw content into polished posts across every platform.</p></div>
+            </AnimatedItem>
+            <AnimatedItem delay={250} className="grid items-center gap-10 md:grid-cols-2">
+              <div className="md:order-first"><h3 className="text-2xl font-semibold mb-3">Post smarter, not harder</h3><p className="text-slate-600 leading-relaxed">One tap generates captions, hashtags, and hooks tailored to your brand voice.</p></div>
+              <img src="/images/creator-posting.jpg" alt="Hands holding a phone while posting to social media" loading="lazy" className="h-72 w-full rounded-2xl object-cover shadow-lg hover:scale-[1.02] transition-transform duration-300 animate-float" />
+            </AnimatedItem>
           </div>
         </div>
       </section>
@@ -261,7 +277,7 @@ export default function Landing() {
                 {/* Gradient border glow on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none bg-gradient-to-br from-brand-500/20 to-accent-500/20" />
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-50 to-accent-50 border border-brand-100 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-50 to-accent-50 border border-brand-100 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform animate-float-delayed">
                     <FeatureIcon name={feature.icon as IconName} />
                   </div>
                   <h3 className="font-semibold text-slate-900 mb-2">
@@ -275,6 +291,16 @@ export default function Landing() {
               </AnimatedItem>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* For creators, by AI */}
+      <section className="relative overflow-hidden bg-brand-950 bg-[url('/images/creator-celebrating.jpg')] bg-cover bg-center bg-fixed text-white">
+        <div className="absolute inset-0 bg-brand-950/70" />
+        <div className="relative mx-auto max-w-5xl px-6 py-24 text-center">
+          <h2 className="text-3xl md:text-4xl font-light tracking-tight">Join creators who post 3× more with KREO</h2>
+          <p className="mx-auto mt-4 max-w-xl text-brand-100/80">Spend less time wrestling with content and more time doing the work you love.</p>
+          <Link to="/signup" className="mt-8 inline-block rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-brand-700 shadow-lg transition-transform duration-300 hover:scale-105">Start creating free</Link>
         </div>
       </section>
 
